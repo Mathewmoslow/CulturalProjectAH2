@@ -34,3 +34,5 @@ professional images/thin images.ai
 presentation-rebuild-clean.html
 presentation-rebuild.html
 voiceover-scripts.txt
+
+# Note: index.html is NOT ignored - it's the main presentation file
