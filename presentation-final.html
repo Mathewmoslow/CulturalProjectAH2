@@ -2598,8 +2598,13 @@
             broadcastChannel = new BroadcastChannel('presentation-sync');
             broadcastChannel.onmessage = (event) => {
                 if (event.data.type === 'audience-ready') {
-                    broadcastChannel.postMessage({ type: 'slide-change', slide: currentSlide });
-                    broadcastChannel.postMessage({ type: 'palette-change', palette: currentPalette });
+                    // Sync audience to current presenter state
+                    broadcastChannel.postMessage({
+                        type: 'sync-state',
+                        slide: currentSlide,
+                        palette: currentPalette,
+                        presentationStarted: audioUnlocked
+                    });
                 }
             };
         }
@@ -2691,6 +2696,38 @@
                 updateProgress();
             } else if (event.data.type === 'palette-change') {
                 presentationContainer.setAttribute('data-palette', event.data.palette);
+            } else if (event.data.type === 'sync-state') {
+                // Initial sync when audience view opens
+                const targetSlide = event.data.slide;
+                const targetPalette = event.data.palette;
+                const presenterStarted = event.data.presentationStarted;
+
+                // Hide start button
+                const startButton = document.getElementById('startButton');
+                if (startButton) startButton.classList.add('hidden');
+
+                // Set palette
+                presentationContainer.setAttribute('data-palette', targetPalette);
+
+                // If presenter has started, sync to their slide
+                if (presenterStarted && targetSlide > 0) {
+                    // Transition to presenter's current slide
+                    slides[currentSlide].classList.remove('active');
+                    currentSlide = targetSlide;
+                    slides[currentSlide].classList.add('active');
+                    playSlideVideoAudience(slides[currentSlide]);
+                    updateProgress();
+                } else if (presenterStarted && targetSlide === 0) {
+                    // Presenter is on title slide with video playing
+                    const titleVideo = document.getElementById('titleVideo');
+                    const titlePlaceholder = document.getElementById('titlePlaceholder');
+                    if (titleVideo && titlePlaceholder) {
+                        titlePlaceholder.style.display = 'none';
+                        titleVideo.style.display = 'block';
+                        titleVideo.play().catch(err => console.log('Audience video playback prevented:', err));
+                    }
+                }
+                // If presenter hasn't started, audience stays on slide 0 with placeholder
             } else if (event.data.type === 'presentation-start') {
                 // Auto-start title video in audience view
                 const titleVideo = document.getElementById('titleVideo');
