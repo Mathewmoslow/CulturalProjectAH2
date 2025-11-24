@@ -2647,6 +2647,15 @@
                     previousSlide.classList.remove('active');
                 }
 
+                // Special case: Stop title video when leaving title slide (slide 0)
+                if (previousIndex === 0) {
+                    const titleVideo = document.getElementById('titleVideo');
+                    if (titleVideo) {
+                        titleVideo.pause();
+                        titleVideo.currentTime = 0;
+                    }
+                }
+
                 // Update to new slide
                 currentSlide = event.data.slide;
                 const newSlide = slides[currentSlide];
@@ -2682,6 +2691,7 @@
                     titlePlaceholder.style.display = 'none';
                     titleVideo.style.display = 'block';
                     titleVideo.play().catch(err => console.log('Audience video playback prevented:', err));
+                    // Note: Don't add onended handler - presenter will broadcast slide-change when ready
                 }
             } else if (event.data.type === 'video-play') {
                 // Sync video play in audience view
