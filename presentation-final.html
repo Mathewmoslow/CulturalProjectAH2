@@ -2292,6 +2292,16 @@
         }
     }
 
+    // Video playback control for audience view (no auto-advance)
+    function playSlideVideoAudience(slide) {
+        const video = slide.querySelector('video');
+        if (video) {
+            video.currentTime = 0;
+            video.play().catch(err => console.log('Video playback prevented:', err));
+            // Audience view: NO onended handlers - presenter controls everything
+        }
+    }
+
     // Video playback control
     function playSlideVideo(slide) {
         const video = slide.querySelector('video');
@@ -2640,9 +2650,9 @@
                 const previousSlide = slides[currentSlide];
                 const previousIndex = currentSlide;
 
-                // Stop video/audio on previous slide
+                // Stop video on previous slide (audience view)
                 if (previousSlide) {
-                    stopSlideAudio();
+                    // NO stopSlideAudio in audience view - audio comes from video
                     stopSlideVideo(previousSlide, event.data.slide);
                     previousSlide.classList.remove('active');
                 }
@@ -2661,8 +2671,8 @@
                 const newSlide = slides[currentSlide];
                 newSlide.classList.add('active');
 
-                // Play video/audio on new slide
-                // Don't call playSlideVideo if video should continue from previous slide
+                // Play video on new slide (AUDIENCE VIEW - NO AUTO-ADVANCE)
+                // Don't call playSlideVideoAudience if video should continue from previous slide
                 const videoShouldContinue = (
                     (previousIndex === 1 && currentSlide === 2) ||   // team video continues
                     (previousIndex === 6 && currentSlide === 7) ||   // brooke video continues
@@ -2675,9 +2685,9 @@
                 );
 
                 if (!videoShouldContinue) {
-                    playSlideVideo(newSlide);
+                    playSlideVideoAudience(newSlide);  // Use audience version - no auto-advance
                 }
-                playSlideAudio(currentSlide);
+                // NO playSlideAudio in audience view - audio comes from video
                 updateProgress();
             } else if (event.data.type === 'palette-change') {
                 presentationContainer.setAttribute('data-palette', event.data.palette);
