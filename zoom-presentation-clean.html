@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cultural Influences - Zoom Presentation</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #40798C;
+            --primary-dark: #2a5c6b;
+            --secondary: #70A9A1;
+            --accent: #B08D57;
+            --text-dark: #1a1a1a;
+            --text-mid: #4a4a4a;
+            --text-light: #666;
+            --bg-light: #fafafa;
+            --border: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000;
+            color: #fff;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* SLIDE - Both zoom and content slides use same base */
+        .slide {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        /* ZOOM SLIDE STYLE */
+        .slide.zoom-slide {
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+        }
+
+        .zoom-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* CONTENT SLIDE STYLE */
+        .slide.content-slide {
+            width: 1400px;
+            height: 787px;
+            background: white;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        /* AUDIENCE VIEW - larger scaling */
+        body.audience-view .slide.content-slide {
+            transform: translate(-50%, -50%) scale(var(--slide-scale, 1));
+        }
+
+        /* Slide header */
+        .slide-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 35px 50px 30px;
+            border-bottom: 3px solid var(--accent);
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .slide-title {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 42px;
+            font-weight: 700;
+            color: white;
+            line-height: 1.1;
+        }
+
+        .slide-number {
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+            font-size: 14px;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Slide content */
+        .slide-content {
+            padding: 40px 60px;
+            overflow: hidden;
+            height: calc(100% - 120px);
+        }
+
+        .content-block {
+            background: var(--bg-light);
+            padding: 20px 24px;
+            border-left: 3px solid var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .section-label {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .content-block h3 {
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+        }
+
+        .content-block p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text-mid);
+        }
+
+        /* Navigation */
+        .nav-controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 12px 20px;
+            border-radius: 8px;
+        }
+
+        body.audience-view .nav-controls {
+            display: none;
+        }
+
+        .nav-btn {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Progress indicator */
+        .progress-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+            background: rgba(0, 0, 0, 0.6);
+            padding: 8px 16px;
+            border-radius: 6px;
+            z-index: 1000;
+        }
+
+        body.audience-view .progress-indicator {
+            display: none;
+        }
+
+        /* Title slide special styling */
+        .layout-title {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            gap: 30px;
+            height: 100%;
+        }
+
+        .hero-title {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 56px;
+            font-weight: 700;
+            color: var(--text-dark);
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 24px;
+            color: var(--text-mid);
+            line-height: 1.4;
+        }
+
+        .hero-meta {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Team grid */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .team-card {
+            background: white;
+            border: 1px solid var(--border);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .team-card h4 {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .team-card p {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.4;
+        }
+
+        /* Transition effects */
+        .slide.zoom-out {
+            animation: zoomInEffect 0.8s ease-out forwards;
+        }
+
+        .slide.fade-white {
+            animation: fadeToWhite 0.4s ease-in forwards;
+        }
+
+        .slide.fade-in-from-white {
+            animation: fadeInFromWhite 0.6s ease-out forwards;
+        }
+
+        @keyframes zoomInEffect {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1.5);
+            }
+        }
+
+        @keyframes fadeToWhite {
+            0% {
+                opacity: 1;
+                background: #000;
+            }
+            100% {
+                opacity: 0;
+                background: #fff;
+            }
+        }
+
+        @keyframes fadeInFromWhite {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+
+        <!-- SLIDE 0: Title Slide -->
+        <div class="slide content-slide active" data-slide="0">
+            <div class="slide-header">
+                <h1 class="slide-title">Cultural Influences on Nursing Care</h1>
+                <div class="slide-number">01 / 23</div>
+            </div>
+            <div class="slide-content layout-title">
+                <div style="max-width: 900px;">
+                    <h2 class="hero-title">Diabetes among Middle-Aged Native American Men</h2>
+                    <p class="hero-subtitle">Understanding Cultural Dimensions for Effective, Respectful Care</p>
+                    <div style="margin-top: 40px;">
+                        <p class="hero-meta">NURS 320 - Adult Health II • AdventHealth University • 2025</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 1: Zoom - Brooke Thomas -->
+        <div class="slide zoom-slide" data-slide="1" data-audio-start="1">
+            <img src="images/brookethomas.png" alt="Brooke Thomas">
+        </div>
+
+        <!-- SLIDE 2: Team Members (Content) -->
+        <div class="slide content-slide" data-slide="2" data-audio-continue="1">
+            <div class="slide-header">
+                <h1 class="slide-title">Research Team & Focus Areas</h1>
+                <div class="slide-number">02 / 23</div>
+            </div>
+            <div class="slide-content">
+                <div class="content-block">
+                    <div class="section-label">Team Overview</div>
+                    <p>Eight nursing students researched how cultural factors influence diabetes care for middle-aged Native American men. Type 2 diabetes affects this population at alarming rates—13.6% prevalence compared to 7% in the Caucasian population.</p>
+                </div>
+
+                <div class="team-grid">
+                    <div class="team-card">
+                        <h4>Ana Lucia Diao</h4>
+                        <p>Health Disparities & Epidemiology</p>
+                    </div>
+                    <div class="team-card">
+                        <h4>Brooke Thomas</h4>
+                        <p>Traditional Healing & Medicine</p>
+                    </div>
+                    <div class="team-card">
+                        <h4>Chanel Campbell</h4>
+                        <p>Health Beliefs & Medicine Wheel</p>
+                    </div>
+                    <div class="team-card">
+                        <h4>Charlene Fana</h4>
+                        <p>Family Dynamics & Decision-Making</p>
+                    </div>
+                    <div class="team-card">
+                        <h4>Mathew Moslow</h4>
+                        <p>Gender Issues & Middle-Aged Males</p>
+                    </div>
+                    <div class="team-card">
+                        <h4>Matteo Testa</h4>
+                        <p>Spirituality & Religion in Healing</p>
+                    </div>
+                    <div class="team-card">
+                        <h4>Melanie Rodriguez</h4>
+                        <p>Diet, Nutrition & Food Access</p>
+                    </div>
+                    <div class="team-card">
+                        <h4>Shanique Wilson</h4>
+                        <p>Communication & Special Considerations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: Zoom - Ana Lucia Diao -->
+        <div class="slide zoom-slide" data-slide="3" data-audio-start="2">
+            <img src="images/analuciadiao.png" alt="Ana Lucia Diao">
+        </div>
+
+        <!-- SLIDE 4: Health Disparities (Content) -->
+        <div class="slide content-slide" data-slide="4" data-audio-continue="2">
+            <div class="slide-header">
+                <h1 class="slide-title">Health Disparities & Diabetes Prevalence</h1>
+                <div class="slide-number">03 / 23</div>
+            </div>
+            <div class="slide-content">
+                <div class="content-block">
+                    <div class="section-label">Epidemiology</div>
+                    <p>Native American communities experience Type 2 diabetes at nearly double the rate of the general U.S. population. This disparity reflects complex interactions between historical trauma, socioeconomic barriers, and cultural factors affecting health outcomes.</p>
+                </div>
+
+                <div class="content-block">
+                    <div class="section-label">Key Statistics</div>
+                    <p><strong>13.6%</strong> prevalence among Native Americans vs. <strong>7%</strong> in general population</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add more slides... continuing pattern of Zoom → Content -->
+
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="nav-controls">
+        <button class="nav-btn" onclick="previousSlide()">← Previous</button>
+        <button class="nav-btn" id="pauseBtn" onclick="toggleAudio()">Pause Audio</button>
+        <button class="nav-btn" onclick="nextSlide()">Next →</button>
+        <button class="nav-btn" onclick="toggleAudienceView()">Audience View</button>
+    </div>
+
+    <!-- Progress Indicator -->
+    <div class="progress-indicator" id="progress">Slide 1 / 23</div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        let currentAudio = null;
+        let audioQueue = [];
+        let isAudienceView = false;
+        let broadcastChannel = null;
+
+        // Audio map: starts with zoom slide, ends with content slide
+        const audioMap = {
+            1: ['audio/Block-1.mp3', 'audio/Block-2.mp3'], // Starts slide 1 (zoom), continues through slide 2 (content)
+            3: ['audio/Block-3.mp3'], // Starts slide 3 (zoom), continues through slide 4 (content)
+            // Add more audio mappings...
+        };
+
+        function showSlide(index) {
+            if (index < 0 || index >= totalSlides) return;
+
+            const previousSlide = slides[currentSlide];
+            const nextSlide = slides[index];
+
+            // Check if transitioning from zoom slide to content slide
+            const isZoomToContent = previousSlide.classList.contains('zoom-slide') &&
+                                     nextSlide.classList.contains('content-slide');
+
+            if (isZoomToContent) {
+                // Apply zoom and fade transition
+                previousSlide.classList.add('zoom-out');
+
+                setTimeout(() => {
+                    previousSlide.classList.add('fade-white');
+                }, 800); // After zoom completes
+
+                setTimeout(() => {
+                    previousSlide.classList.remove('active', 'zoom-out', 'fade-white');
+                    nextSlide.classList.add('active', 'fade-in-from-white');
+
+                    setTimeout(() => {
+                        nextSlide.classList.remove('fade-in-from-white');
+                    }, 600);
+                }, 1200); // After zoom + fade completes
+            } else {
+                // Standard instant transition
+                slides.forEach(s => s.classList.remove('active'));
+                nextSlide.classList.add('active');
+            }
+
+            currentSlide = index;
+
+            // Update progress
+            document.getElementById('progress').textContent = `Slide ${index + 1} / ${totalSlides}`;
+
+            // Handle audio
+            const audioStart = nextSlide.dataset.audioStart;
+            const audioContinue = nextSlide.dataset.audioContinue;
+
+            if (audioStart) {
+                // This is a zoom slide - start new audio
+                stopAudio();
+                playAudio(parseInt(audioStart));
+            } else if (!audioContinue) {
+                // No audio relationship - stop audio
+                stopAudio();
+            }
+            // If audioContinue, keep audio playing
+
+            // Calculate scale for content slides in audience view
+            if (isAudienceView && nextSlide.classList.contains('content-slide')) {
+                const scale = Math.min(
+                    window.innerWidth / 1400,
+                    window.innerHeight / 787
+                );
+                nextSlide.style.setProperty('--slide-scale', scale);
+            }
+
+            // Broadcast to audience window
+            if (broadcastChannel) {
+                broadcastChannel.postMessage({ type: 'slideChange', slideIndex: index });
+            }
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function previousSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        function playAudio(audioKey) {
+            const files = audioMap[audioKey];
+            if (!files || !files.length) return;
+
+            audioQueue = [...files];
+            playNextInQueue();
+        }
+
+        function playNextInQueue() {
+            if (!audioQueue.length) {
+                currentAudio = null;
+                return;
+            }
+
+            const file = audioQueue.shift();
+            currentAudio = new Audio(file);
+            currentAudio.onended = playNextInQueue;
+            currentAudio.play().catch(err => console.log('Audio blocked:', err));
+        }
+
+        function stopAudio() {
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio = null;
+            }
+            audioQueue = [];
+        }
+
+        function toggleAudio() {
+            if (!currentAudio) return;
+
+            if (currentAudio.paused) {
+                currentAudio.play();
+                document.getElementById('pauseBtn').textContent = 'Pause Audio';
+            } else {
+                currentAudio.pause();
+                document.getElementById('pauseBtn').textContent = 'Resume Audio';
+            }
+        }
+
+        function toggleAudienceView() {
+            isAudienceView = !isAudienceView;
+            document.body.classList.toggle('audience-view', isAudienceView);
+            showSlide(currentSlide); // Recalculate scale
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                previousSlide();
+            }
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>

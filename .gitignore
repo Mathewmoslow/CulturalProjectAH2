@@ -1,0 +1,36 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Large unused video files (>100MB - exceeds GitHub limit)
+individual_videos/chanel.mov
+individual_videos/shanique.mp4
+individual_videos/brooke thomas.mp4
+individual_videos/Matteo slide.mp4
+movie .mp4
+professional images/thin images.ai
+
+# Legacy/backup files
+presentation-rebuild-clean.html
+presentation-rebuild.html
+voiceover-scripts.txt

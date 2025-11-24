@@ -1,0 +1,1982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Cultural Influences on Nursing Care - Mobile</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            /* Turquoise & Copper Palette */
+            --primary: #40798C;
+            --primary-dark: #2a5c6b;
+            --secondary: #70A9A1;
+            --accent: #B08D57;
+            --text-dark: #1a1a1a;
+            --text-mid: #4a4a4a;
+            --text-light: #666;
+            --bg-light: #fafafa;
+            --border: #e0e0e0;
+        }
+
+        /* EARTH & HERITAGE */
+        [data-palette="earth-heritage"] {
+            --primary: #8B4513;
+            --primary-dark: #5c2e0a;
+            --secondary: #A0826D;
+            --accent: #CD853F;
+        }
+
+        /* SAGE & SAND */
+        [data-palette="sage-sand"] {
+            --primary: #7A8B61;
+            --primary-dark: #5c6b47;
+            --secondary: #A8C090;
+            --accent: #D4A574;
+        }
+
+        /* MEDICINE WHEEL */
+        [data-palette="medicine-wheel"] {
+            --primary: #C73E1D;
+            --primary-dark: #8f2c15;
+            --secondary: #F4B942;
+            --accent: #2E7D32;
+        }
+
+        /* RIVER STONE */
+        [data-palette="river-stone"] {
+            --primary: #5C6672;
+            --primary-dark: #3d454f;
+            --secondary: #6B9BD1;
+            --accent: #8FA3B0;
+        }
+
+        /* CEDAR & PINE */
+        [data-palette="cedar-pine"] {
+            --primary: #2B4F3C;
+            --primary-dark: #193225;
+            --secondary: #7F5B43;
+            --accent: #B37A4B;
+        }
+
+        /* SUNSET MESA */
+        [data-palette="sunset-mesa"] {
+            --primary: #D87A4A;
+            --primary-dark: #A5542A;
+            --secondary: #F2BF83;
+            --accent: #B04E39;
+        }
+
+        /* PROFESSIONAL MEDICAL */
+        [data-palette="professional-medical"] {
+            --primary: #2A4F73;
+            --primary-dark: #1C334B;
+            --secondary: #49A6A2;
+            --accent: #77C26B;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #000;
+            color: #f5f6fa;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            touch-action: pan-y;
+        }
+
+        .mobile-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: radial-gradient(circle at top, #101a2d 0%, #050912 65%);
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.12);
+            z-index: 1000;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            width: 0;
+            transition: width 0.4s ease;
+        }
+
+        /* Slide Container */
+        .slide-viewport {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+        }
+
+        .presentation-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .slide-stack {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            background: white;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+            overflow-x: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none;
+            flex-direction: column;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .slide.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        /* Zoom Slide */
+        .slide.zoom-slide {
+            background: #000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .slide.zoom-slide.active {
+            display: flex;
+        }
+
+        .slide.zoom-slide img,
+        .slide.zoom-slide video {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* BACKGROUND VIDEO FOR CONTENT SLIDES */
+        .slide-bg-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            opacity: 0.15;
+        }
+
+        /* Slide Header */
+        .slide-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 20px 16px 16px;
+            border-bottom: 3px solid var(--accent);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .slide-number {
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.6);
+            order: -1;
+        }
+
+        .slide-title {
+            font-family: 'Libre Baskerville', serif;
+            font-size: clamp(20px, 5vw, 32px);
+            font-weight: 700;
+            color: white;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+
+        .slide-subtitle {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(14px, 3.5vw, 16px);
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.85);
+            margin-top: 4px;
+        }
+
+        /* Slide Content */
+        .slide-content {
+            padding: 20px 16px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            flex: 1;
+            -webkit-overflow-scrolling: touch;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Layout Adaptations */
+        .layout-two-col,
+        .layout-single,
+        .layout-title {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .layout-title {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 100%;
+        }
+
+        .content-main,
+        .content-visual {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Content Blocks */
+        .section-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.3px;
+            color: var(--accent);
+            margin-bottom: 4px;
+        }
+
+        .content-block {
+            background: var(--bg-light);
+            padding: 12px 14px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .content-block h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+            letter-spacing: -0.3px;
+        }
+
+        .content-block p {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--text-mid);
+        }
+
+        /* Stat Cards */
+        .stat-card {
+            background: white;
+            border: 1px solid var(--border);
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .stat-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: white;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .stat-content {
+            flex: 1;
+        }
+
+        .stat-number {
+            font-family: 'Inter', sans-serif;
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--text-dark);
+            line-height: 1;
+            letter-spacing: -1px;
+        }
+
+        .stat-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-light);
+            margin-top: 4px;
+            line-height: 1.3;
+        }
+
+        /* Images */
+        .image-container {
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            background: linear-gradient(135deg, rgba(64, 121, 140, 0.08), rgba(176, 141, 87, 0.08));
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-caption,
+        .visual-caption {
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            color: #888;
+            margin-top: 6px;
+            line-height: 1.4;
+        }
+
+        .visual-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Insight Box */
+        .insight-box {
+            background: var(--primary);
+            color: white;
+            padding: 14px 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .insight-box::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            font-family: 'Libre Baskerville', serif;
+            font-size: 80px;
+            color: rgba(255, 255, 255, 0.1);
+            line-height: 1;
+        }
+
+        .insight-box p {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.55;
+            position: relative;
+            z-index: 1;
+            color: white;
+        }
+
+        /* Data List */
+        .data-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .data-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            color: var(--text-mid);
+            line-height: 1.4;
+        }
+
+        .data-item::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+            margin-top: 7px;
+            flex-shrink: 0;
+        }
+
+        .data-label {
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .data-desc {
+            font-weight: 400;
+        }
+
+        /* Team Grid */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+        }
+
+        .team-card {
+            background: var(--bg-light);
+            padding: 14px;
+            border-top: 3px solid var(--secondary);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .team-card-headshot {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+            overflow: hidden;
+            border: 3px solid white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .team-card-headshot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .team-card-headshot svg {
+            width: 24px;
+            height: 24px;
+            stroke: white;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .team-card h4 {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        .team-card p {
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-light);
+            line-height: 1.4;
+        }
+
+        /* Title Slide Elements */
+        .hero-title {
+            font-family: 'Libre Baskerville', serif;
+            font-size: clamp(28px, 7vw, 48px);
+            font-weight: 700;
+            color: var(--text-dark);
+            line-height: 1.2;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+        }
+
+        .hero-subtitle {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(16px, 4vw, 20px);
+            font-weight: 400;
+            color: var(--text-mid);
+            line-height: 1.4;
+        }
+
+        .hero-meta {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(12px, 3vw, 14px);
+            font-weight: 500;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .start-button {
+            margin-top: 24px;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            touch-action: manipulation;
+        }
+
+        .start-button:active {
+            transform: scale(0.98);
+        }
+
+        .start-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .start-button.hidden {
+            display: none;
+        }
+
+        /* Grids */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        @media (min-width: 600px) {
+            .grid-2 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .grid-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 900px) {
+            .grid-3 {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .stat-banner {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            padding: 16px;
+            border-radius: 6px;
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        .stat-banner .stat-value {
+            font-family: 'Inter', sans-serif;
+            font-size: 48px;
+            font-weight: 900;
+            color: white;
+            line-height: 1;
+            letter-spacing: -2px;
+        }
+
+        .stat-banner .stat-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 8px;
+            line-height: 1.3;
+        }
+
+        .citation {
+            font-size: 11px;
+            font-style: italic;
+            color: var(--text-light);
+            margin-top: 8px;
+        }
+
+        /* Mobile Controls */
+        .mobile-controls {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(11, 17, 28, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 12px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 999;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .mobile-controls.hidden {
+            display: none;
+        }
+
+        /* Navigation Row */
+        .nav-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 14px 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.1);
+            color: #f5f6fa;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            touch-action: manipulation;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .nav-btn:active {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(0.98);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .nav-btn.small {
+            flex: 0 0 auto;
+            padding: 14px 16px;
+            font-size: 12px;
+        }
+
+        /* Palette Row */
+        .palette-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .palette-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: rgba(255, 255, 255, 0.6);
+            white-space: nowrap;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .palette-select {
+            flex: 1;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.1);
+            color: #f5f6fa;
+            font-weight: 600;
+            padding: 10px 12px;
+            font-size: 12px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .palette-select option {
+            background: #1a1a1a;
+            color: #f5f6fa;
+            font-weight: 600;
+            padding: 8px;
+        }
+
+        /* Zoom Transition Effects */
+        .slide.zoom-in-transition {
+            animation: zoomIntoWhite 1.5s ease-in forwards;
+        }
+
+        .slide.fade-from-white {
+            animation: fadeFromWhite 0.6s ease-out forwards;
+        }
+
+        @keyframes zoomIntoWhite {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+                filter: brightness(1);
+            }
+            60% {
+                transform: scale(3);
+                opacity: 1;
+                filter: brightness(1);
+            }
+            100% {
+                transform: scale(4);
+                opacity: 0;
+                filter: brightness(3);
+            }
+        }
+
+        @keyframes fadeFromWhite {
+            0% {
+                opacity: 0;
+                transform: scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Slide Counter */
+        .slide-counter {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.1em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mobile-container">
+        <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+
+        <div class="slide-viewport">
+            <div class="presentation-container" data-palette="turquoise-copper">
+                <div class="slide-stack">
+
+        <!-- SLIDE 1: TITLE -->
+        <div class="slide active">
+            <div class="slide-header">
+                <h1 class="slide-title">Cultural Influences on Nursing Care</h1>
+                <div class="slide-number">01 / 21</div>
+            </div>
+            <div class="slide-content layout-title">
+                <div style="max-width: 900px;">
+                    <h2 class="hero-title">Diabetes among Middle-Aged Native American Men</h2>
+                    <p class="hero-subtitle">Understanding Cultural Dimensions for Effective, Respectful Care</p>
+                    <div style="margin-top: 32px;">
+                        <p class="hero-meta">NURS 320 - Adult Health II • AdventHealth University • 2025</p>
+                    </div>
+                    <button id="startButton" class="start-button" onclick="startPresentation()">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                        <span>Start Presentation</span>
+                    </button>
+                </div>
+                <div style="max-width: 100%; aspect-ratio: 21/9; overflow: hidden; position: relative; margin-top: 20px;">
+                    <video id="titleVideo" style="width: 100%; height: 100%; object-fit: cover; display: none;" loop playsinline>
+                        <source src="images/slide01-title-health.mp4" type="video/mp4">
+                    </video>
+                    <img id="titlePlaceholder" src="images/frame.png" alt="Video placeholder - first frame" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: ZOOM INTRO -->
+        <div class="slide zoom-slide" data-video="zoomintro">
+            <video muted loop playsinline>
+                <source src="individual_videos/zoomintro.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <!-- SLIDE 3: TEAM MEMBERS -->
+        <div class="slide" data-video="zoomteamvideo2">
+            <video class="slide-bg-video" muted loop playsinline>
+                <source src="individual_videos/zoomteamvideo2.mp4" type="video/mp4">
+            </video>
+            <div class="slide-header">
+                <h1 class="slide-title">Research Team & Focus Areas</h1>
+                <div class="slide-number">03 / 21</div>
+            </div>
+            <div class="slide-content">
+                <div class="content-block">
+                    <div class="section-label">Team Overview</div>
+                    <p>Eight nursing students researched how cultural factors influence diabetes care for middle-aged Native American men. Type 2 diabetes affects this population at alarming rates—<strong style="font-size: 120%; color: var(--primary);">13.6% prevalence</strong> compared to <strong>7%</strong> in the Caucasian population. Each team member focused on a specific aspect of culturally competent diabetes nursing care.</p>
+                </div>
+
+                <div class="team-grid" style="margin-top: 20px;">
+                    <div class="team-card">
+                        <div class="team-card-headshot">
+                            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        </div>
+                        <h4>Ana Lucia Diao</h4>
+                        <p>Health Disparities & Diabetes Epidemiology</p>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-card-headshot">
+                            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        </div>
+                        <h4>Brooke Thomas</h4>
+                        <p>Traditional Healing & Complementary Medicine</p>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-card-headshot">
+                            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        </div>
+                        <h4>Chanel Campbell</h4>
+                        <p>Health Beliefs & Medicine Wheel Approach</p>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-card-headshot">
+                            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        </div>
+                        <h4>Charlene Fana</h4>
+                        <p>Family Dynamics & Decision-Making</p>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-card-headshot">
+                            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        </div>
+                        <h4>Mathew Moslow</h4>
+                        <p>Gender Issues & Middle-Aged Males</p>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-card-headshot">
+                            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        </div>
+                        <h4>Matteo Testa</h4>
+                        <p>Spirituality & Religion in Healing</p>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-card-headshot">
+                            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        </div>
+                        <h4>Melanie Rodriguez</h4>
+                        <p>Diet, Nutrition & Food Access</p>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-card-headshot">
+                            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        </div>
+                        <h4>Shanique Wilson</h4>
+                        <p>Communication & Special Considerations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: ZOOM - ANA -->
+        <div class="slide zoom-slide" data-video="zoomanaluciadiao">
+            <video muted loop playsinline>
+                <source src="individual_videos/zoomanaluciadiao.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <!-- SLIDE 5: HEALTH DISPARITIES - REDESIGNED -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Health Disparities & Disease Burden</h1>
+                <div class="slide-number">05 / 21</div>
+            </div>
+            <div class="slide-content">
+
+                <!-- Hero Statistics -->
+                <div class="grid-2" style="margin-bottom: 16px;">
+                    <!-- Prevalence Comparison -->
+                    <div style="background: linear-gradient(135deg, var(--primary), var(--primary-dark)); padding: 20px; border-radius: 8px; position: relative; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                        <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: rgba(255,255,255,0.08); border-radius: 50%;"></div>
+                        <div style="position: relative; z-index: 1;">
+                            <div style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 10px;">Diabetes Prevalence</div>
+                            <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px; flex-wrap: wrap;">
+                                <div style="font-family: 'Inter', sans-serif; font-size: 52px; font-weight: 900; line-height: 1; color: white; letter-spacing: -2px;">13.6<span style="font-size: 36px; opacity: 0.9;">%</span></div>
+                                <div style="font-family: 'Inter', sans-serif; font-size: 24px; font-weight: 700; color: rgba(255,255,255,0.6);">vs</div>
+                                <div style="font-family: 'Inter', sans-serif; font-size: 36px; font-weight: 700; line-height: 1; color: rgba(255,255,255,0.85); letter-spacing: -1px;">6.9<span style="font-size: 24px; opacity: 0.8;">%</span></div>
+                            </div>
+                            <div style="font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.95); line-height: 1.4;">AI/AN adults vs non-Hispanic whites</div>
+                            <div style="margin-top: 10px; padding: 6px 10px; background: rgba(0,0,0,0.2); border-radius: 4px; display: inline-block;">
+                                <span style="font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 900; color: var(--accent);">Nearly 2×</span>
+                                <span style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: white; margin-left: 6px;">the prevalence</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mortality Risk -->
+                    <div style="background: linear-gradient(135deg, #c73e1d, #8f2c15); padding: 20px; border-radius: 8px; position: relative; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                        <svg style="position: absolute; top: 12px; right: 12px; width: 60px; height: 60px; opacity: 0.12;" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                        </svg>
+                        <div style="position: relative; z-index: 1;">
+                            <div style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 10px;">Mortality Risk</div>
+                            <div style="font-family: 'Inter', sans-serif; font-size: 72px; font-weight: 900; line-height: 0.9; color: white; letter-spacing: -3px; margin-bottom: 10px;">2.3<span style="font-size: 48px;">×</span></div>
+                            <div style="font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.95); line-height: 1.3;">More likely to die from diabetes complications</div>
+                            <div style="font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.7); margin-top: 6px;">IHS, 2023</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Complications Grid -->
+                <div class="grid-2" style="margin-bottom: 16px;">
+                    <!-- CVD -->
+                    <div style="background: white; border: 2px solid var(--border); padding: 14px; border-radius: 6px; text-align: center; position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--primary), var(--secondary));"></div>
+                        <svg style="width: 28px; height: 28px; margin: 0 auto 8px; opacity: 0.2;" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                        <div style="font-family: 'Inter', sans-serif; font-size: 36px; font-weight: 900; color: var(--primary); line-height: 1; letter-spacing: -1px;">36<span style="font-size: 24px;">%</span></div>
+                        <div style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: var(--text-mid); margin-top: 6px; line-height: 1.3;">Cardiovascular Disease</div>
+                    </div>
+
+                    <!-- CKD -->
+                    <div style="background: white; border: 2px solid var(--border); padding: 14px; border-radius: 6px; text-align: center; position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--secondary), var(--accent));"></div>
+                        <svg style="width: 28px; height: 28px; margin: 0 auto 8px; opacity: 0.2;" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                        </svg>
+                        <div style="font-family: 'Inter', sans-serif; font-size: 36px; font-weight: 900; color: var(--primary); line-height: 1; letter-spacing: -1px;">31<span style="font-size: 24px;">%</span></div>
+                        <div style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: var(--text-mid); margin-top: 6px; line-height: 1.3;">Chronic Kidney Disease</div>
+                    </div>
+
+                    <!-- Retinopathy -->
+                    <div style="background: white; border: 2px solid var(--border); padding: 14px; border-radius: 6px; text-align: center; position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--accent), var(--primary));"></div>
+                        <svg style="width: 28px; height: 28px; margin: 0 auto 8px; opacity: 0.2;" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/>
+                        </svg>
+                        <div style="font-family: 'Inter', sans-serif; font-size: 36px; font-weight: 900; color: var(--primary); line-height: 1; letter-spacing: -1px;">24<span style="font-size: 24px;">%</span></div>
+                        <div style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: var(--text-mid); margin-top: 6px; line-height: 1.3;">Diabetic Retinopathy</div>
+                    </div>
+
+                    <!-- Amputation -->
+                    <div style="background: white; border: 2px solid var(--border); padding: 14px; border-radius: 6px; text-align: center; position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #c73e1d, var(--primary));"></div>
+                        <svg style="width: 28px; height: 28px; margin: 0 auto 8px; opacity: 0.2;" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2">
+                            <path d="M12 2v20M2 12h20"/>
+                        </svg>
+                        <div style="font-family: 'Inter', sans-serif; font-size: 36px; font-weight: 900; color: var(--primary); line-height: 1; letter-spacing: -1px;">4<span style="font-size: 24px;">%</span></div>
+                        <div style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: var(--text-mid); margin-top: 6px; line-height: 1.3;">Lower Extremity Amputation</div>
+                    </div>
+                </div>
+
+                <!-- Bottom Callouts -->
+                <div class="grid-2">
+                    <!-- Young Men Risk -->
+                    <div style="background: linear-gradient(135deg, rgba(64, 121, 140, 0.12), rgba(176, 141, 87, 0.12)); border-left: 4px solid var(--accent); padding: 14px 16px; border-radius: 4px;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="font-family: 'Inter', sans-serif; font-size: 40px; font-weight: 900; color: var(--primary); line-height: 1; letter-spacing: -2px;">2.5<span style="font-size: 28px;">×</span></div>
+                            <div style="flex: 1;">
+                                <div style="font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; color: var(--text-dark); line-height: 1.4; margin-bottom: 4px;">Young Indigenous Men (18-34)</div>
+                                <div style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 500; color: var(--text-mid); line-height: 1.3;">More likely to be diagnosed with diabetes vs non-Hispanic white young adults</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Data Source -->
+                    <div style="background: var(--primary); padding: 14px 16px; border-radius: 4px; display: flex; flex-direction: column; justify-content: center;">
+                        <div style="font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: rgba(255,255,255,0.7); margin-bottom: 6px;">IHS Audit 2024</div>
+                        <div style="font-family: 'Inter', sans-serif; font-size: 24px; font-weight: 900; color: white; line-height: 1; letter-spacing: -1px; margin-bottom: 4px;">140,584</div>
+                        <div style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.9); line-height: 1.3;">persons with diabetes across 324 facilities</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- SLIDE 6: ROOT CAUSES -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Root Causes & Risk Factors</h1>
+                <div class="slide-number">06 / 21</div>
+            </div>
+            <div class="slide-content">
+                <div class="content-main">
+                    <div class="content-block">
+                        <div class="section-label">Historical Context</div>
+                        <h3>Centuries of Cultural Disruption</h3>
+                        <p>The diabetes epidemic in Native American communities did not happen by chance—it is the result of centuries of forced cultural disruption. Historical trauma from colonization, forced relocation to reservations, and the boarding school era created intergenerational mistrust of healthcare systems (Walls & Whitbeck, 2012; Gone & Trimble, 2012).</p>
+                    </div>
+
+                    <div class="content-block">
+                        <div class="section-label">Dietary Transition</div>
+                        <h3>From Traditional Foods to Commodity Rations</h3>
+                        <p>Perhaps most significantly, there was a forced dietary transition from traditional, healthy foods to government commodity foods high in sugar, refined flour, and lard (Wedekind et al., 2021). This shift from lean proteins, vegetables and whole grains to processed foods like frybread directly fueled the diabetes epidemic.</p>
+                    </div>
+
+                    <div class="content-block">
+                        <div class="section-label">Cultural Attribution</div>
+                        <h3>"White Man's Sickness"</h3>
+                        <p>Some Native patients describe diabetes as a white man's sickness—a disease brought by cultural disruption (Jernigan et al., 2020). Understanding these root causes is essential for providing effective, compassionate care.</p>
+                    </div>
+                </div>
+
+                <div class="content-visual">
+                    <div>
+                        <div class="image-container" style="aspect-ratio: 16 / 8; overflow: hidden;">
+                            <img src="images/slide04-causal-pathway.jpeg" alt="Causal pathway to diabetes epidemic" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <p class="image-caption"><strong>Figure 2:</strong> Causal pathway to diabetes epidemic. Source: Wedekind et al. (2021)</p>
+                    </div>
+
+                    <div class="content-block">
+                        <div class="section-label">Major Complications</div>
+                        <div class="data-list">
+                            <div class="data-item">36% have cardiovascular disease (IHS, 2024)</div>
+                            <div class="data-item">31% with chronic kidney disease; ESRD incidence 1.6× higher than non-Hispanic whites (IHS, 2024; Wedekind et al., 2021)</div>
+                            <div class="data-item">24% with diabetic retinopathy among those examined (IHS, 2024)</div>
+                            <div class="data-item">4% have documented lower extremity amputation (IHS, 2024)</div>
+                        </div>
+                    </div>
+
+                    <div class="insight-box">
+                        <p>Cultural stoicism and fatalistic attitudes toward diabetes may lead to late presentation and delayed treatment, exacerbating complications (Wedekind et al., 2021).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: ZOOM - BROOKE -->
+        <div class="slide zoom-slide" data-video="zoombrookethomas">
+            <video muted loop playsinline>
+                <source src="individual_videos/zoombrookethomas.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <!-- SLIDE 8: TRADITIONAL HEALING -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Traditional Healing & Complementary Medicine</h1>
+                <div class="slide-number">08 / 21</div>
+            </div>
+            <div class="slide-content">
+                <div class="content-main">
+                    <div class="content-block">
+                        <div class="section-label">Integration</div>
+                        <h3>Bridging Traditional & Western Medicine</h3>
+                        <p>Traditional healing practices are deeply woven into Native American approaches to diabetes management (Jernigan et al., 2020). Many patients use both traditional medicine and Western treatments in complementary ways—and when done respectfully, this integration can improve outcomes.</p>
+                    </div>
+
+                    <div class="content-block">
+                        <div class="section-label">Practices</div>
+                        <h3>Healing Ceremonies & Herbal Remedies</h3>
+                        <div class="data-list">
+                            <div class="data-item"><strong>Medicine Men & Tribal Healers:</strong> Use rituals, prayer, and herbal remedies passed through generations (Jernigan et al., 2020)</div>
+                            <div class="data-item"><strong>Smudging:</strong> Burning sage, cedar, sweetgrass provides spiritual cleansing believed to restore balance</div>
+                            <div class="data-item"><strong>Sweat Lodges:</strong> Detoxification ceremonies (assess cardiovascular/diabetes status first)</div>
+                            <div class="data-item"><strong>Herbal Remedies:</strong> Sage tea, bitter melon, traditional plants for blood sugar management</div>
+                        </div>
+                    </div>
+
+                    <div class="insight-box">
+                        <p>Progressive hospitals accommodate ceremonial practices with proper permissions, recognizing their importance to healing and patient dignity (Jernigan et al., 2020).</p>
+                    </div>
+                </div>
+
+                <div class="content-visual">
+                    <div>
+                        <div class="image-container" style="overflow: hidden;">
+                            <img src="images/slide05-smudging-ceremony.jpeg" alt="Sacred smudging ceremony with sage bundle" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <p class="image-caption"><strong>Figure 3:</strong> Traditional smudging ceremony. Photo: David/Adobe Stock</p>
+                    </div>
+
+                    <div class="content-block">
+                        <div class="section-label">Nursing Considerations</div>
+                        <h3>Respectful Collaboration</h3>
+                        <div class="data-list">
+                            <div class="data-item">Respectfully inquire about complementary medicine use</div>
+                            <div class="data-item">Check for potential drug interactions with diabetes medications</div>
+                            <div class="data-item">Collaborate with traditional healers when appropriate</div>
+                            <div class="data-item">Accommodate ceremonial practices with proper permissions</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: ZOOM - CHANEL -->
+        <div class="slide zoom-slide" data-video="zoomchanelcampbell">
+            <video muted loop playsinline>
+                <source src="individual_videos/zoomchanelcampbell.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <!-- SLIDE 10: MEDICINE WHEEL -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Health Beliefs & Medicine Wheel Approach</h1>
+                <div class="slide-number">10 / 21</div>
+            </div>
+            <div class="slide-content">
+                <div class="content-main">
+                    <div class="content-block">
+                        <div class="section-label">Holistic Worldview</div>
+                        <h3>Four Dimensions of Health</h3>
+                        <p>The Medicine Wheel represents the holistic worldview central to Native American health beliefs. It has four quadrants—<strong>Physical, Mental, Emotional, and Spiritual</strong>—all must be in balance for true health. Diabetes is a manifestation of imbalance across all four dimensions (Jernigan et al., 2020).</p>
+                    </div>
+
+                    <div class="content-block">
+                        <div class="section-label">Four Dimensions of Health</div>
+                        <div class="data-list">
+                            <div class="data-item">
+                                <div class="data-label">Physical</div>
+                                <div class="data-desc">Blood sugar management, medication adherence, exercise</div>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-label">Mental</div>
+                                <div class="data-desc">Diabetes education, understanding disease process</div>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-label">Emotional</div>
+                                <div class="data-desc">Family support, coping with chronic illness</div>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-label">Spiritual</div>
+                                <div class="data-desc">Traditional ceremonies, connection to culture</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="insight-box">
+                        <strong>Nursing Note:</strong> Nurses must explore these beliefs respectfully and align diabetes care plans with patients' cultural worldview, using concepts of balance and harmony when discussing treatment goals.
+                    </div>
+                </div>
+
+                <div class="content-visual">
+                    <img src="images/slide06-medicine-wheel.jpg" alt="Medicine Wheel - Four dimensions of health" class="visual-image">
+                    <p class="visual-caption">Figure 4 — Medicine Wheel: Four dimensions of health</p>
+
+                    <div class="content-block">
+                        <div class="section-label">Cultural Beliefs</div>
+                        <div class="data-list">
+                            <div class="data-item">
+                                <div class="data-label">Cultural Stoicism</div>
+                                <div class="data-desc">Men under-report symptoms, viewing illness as weakness (Wedekind et al., 2021)</div>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-label">Fatalistic Attitudes</div>
+                                <div class="data-desc">Some view diabetes as inevitable (Wedekind et al., 2021)</div>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-label">Harmony Disruption</div>
+                                <div class="data-desc">Illness signals imbalance across all dimensions (Jernigan et al., 2020)</div>
+                            </div>
+                        </div>
+                        <div class="stat-banner">
+                            <div class="stat-value">4</div>
+                            <div class="stat-label">Dimensions of health that must be balanced for healing</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 11: ZOOM - CHARLENE -->
+        <div class="slide zoom-slide" data-video="zoomcharlenefana">
+            <video muted loop playsinline>
+                <source src="individual_videos/zoomcharlenefana.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <!-- SLIDE 12: FAMILY DYNAMICS -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Family Dynamics & Decision-Making</h1>
+                <div class="slide-number">12 / 21</div>
+            </div>
+            <div class="slide-content">
+                <div class="content-main">
+                    <div class="content-block">
+                        <div class="section-label">Collectivist Culture</div>
+                        <h3>The Central Role of Family</h3>
+                        <p>For Native American patients with diabetes, family is central to all healthcare decisions. Family extends beyond the nuclear unit to include extended relatives, elders, and community members. Decision-making is a collective, consultative process—not individual (Jernigan et al., 2020).</p>
+                    </div>
+
+                    <div class="content-block">
+                        <div class="section-label">Elder Authority</div>
+                        <h3>Respecting Traditional Hierarchy</h3>
+                        <div class="data-list">
+                            <div class="data-item">
+                                <p>Elders' opinions carry tremendous weight and may approve major treatment decisions (Jernigan et al., 2020)</p>
+                            </div>
+                            <div class="data-item">
+                                <p>Multiple relatives may attend appointments—welcome this, not view as crowding</p>
+                            </div>
+                            <div class="data-item">
+                                <p>In some tribes, matriarchal figures lead health decisions and must be included in care</p>
+                            </div>
+                            <div class="data-item">
+                                <p>Collectivist culture means family/tribe needs take precedence over individual preferences—this is a strength to leverage (Jernigan et al., 2020)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-visual">
+                    <img src="images/slide07-family-multigenerational.jpg" alt="Multigenerational family structure" class="visual-image">
+                    <p class="visual-caption">Figure 5 — Multigenerational family structure</p>
+
+                    <div class="content-block">
+                        <div class="section-label">Nursing Strategies</div>
+                        <h3>Family-Centered Diabetes Care</h3>
+                        <div class="data-list">
+                            <div class="data-item">
+                                <p>View the family as essential allies in diabetes care, not obstacles</p>
+                            </div>
+                            <div class="data-item">
+                                <p>Frame benefits in family terms: "This insulin helps you stay strong to care for your grandchildren"</p>
+                            </div>
+                            <div class="data-item">
+                                <p>Involve entire family in diabetes education sessions</p>
+                            </div>
+                            <div class="data-item">
+                                <p>Facilitate family consultations when needed for major treatment decisions</p>
+                            </div>
+                            <div class="data-item">
+                                <p>Remember: Extended family structure includes relatives, elders, and community</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 13: ZOOM - MATHEW -->
+        <div class="slide zoom-slide" data-video="zoommathewmoslow">
+            <video muted loop playsinline>
+                <source src="individual_videos/zoommathewmoslow.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <!-- SLIDE 14: GENDER & MIDDLE-AGED MALES -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Gender Issues & Middle-Aged Males</h1>
+                <div class="slide-number">14 / 21</div>
+            </div>
+            <div class="slide-content">
+                <div class="content-main">
+                    <div class="content-block">
+                        <div class="section-label">Developmental Stage</div>
+                        <h3>Generativity vs. Stagnation (Ages 40-65)</h3>
+                        <p>Middle-aged Native American men face unique cultural and gender-based challenges with diabetes. This age group corresponds to Erikson's (1982) Generativity versus Stagnation stage, where men focus on contributing to family and community. Diabetes threatens this generative role, requiring sensitive reframing.</p>
+                        <p class="citation">Erikson, E. H. (1982). The life cycle completed: A review. W. W. Norton & Company.</p>
+                    </div>
+
+                    <div class="content-block">
+                        <div class="section-label">Cultural Stoicism</div>
+                        <h3>Barriers to Care-Seeking</h3>
+                        <div class="data-list">
+                            <div class="data-item">
+                                <p>Cultural conditioning promotes stoicism—expressing pain/illness seen as weakness (Wedekind et al., 2021)</p>
+                            </div>
+                            <div class="data-item">
+                                <p>Men under-report diabetes symptoms like neuropathy pain or vision changes</p>
+                            </div>
+                            <div class="data-item">
+                                <p>Healthcare-seeking viewed as weakness, causing reluctance to attend appointments</p>
+                            </div>
+                            <div class="data-item">
+                                <p>Provider/protector role identity threatened by chronic illness (Erikson, 1982)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="insight-box">
+                        <strong>Reframing Strategy:</strong> Reframe diabetes self-care as fulfilling the provider role: "Taking insulin helps you stay strong for your family. Blood sugar monitoring shows responsibility as a father."
+                    </div>
+                </div>
+
+                <div class="content-visual">
+                    <img src="images/slide08-middle-aged-man.jpg" alt="Middle-aged man in generative stage" class="visual-image">
+                    <p class="visual-caption">Figure 6 — Middle-aged man in generative stage</p>
+
+                    <div class="stat-banner">
+                        <div class="stat-value">40-65</div>
+                        <div class="stat-label">Age range — Generativity vs. Stagnation (Erikson)</div>
+                    </div>
+
+                    <div class="content-block">
+                        <div class="section-label">Nursing Approach</div>
+                        <h3>Strengths-Based Messaging</h3>
+                        <div class="data-list">
+                            <div class="data-item">
+                                <p>Frame diabetes management as strength, not weakness</p>
+                            </div>
+                            <div class="data-item">
+                                <p>Emphasize family responsibility and community contribution</p>
+                            </div>
+                            <div class="data-item">
+                                <p>Enable continued generative work of guiding next generation</p>
+                            </div>
+                            <div class="data-item">
+                                <p>Acknowledge historical trauma's impact on healthcare trust</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 15: ZOOM - MATTEO -->
+        <div class="slide zoom-slide" data-video="zoommatteotesta">
+            <video muted loop playsinline>
+                <source src="individual_videos/zoommatteotesta.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <!-- SLIDE 16: SPIRITUALITY -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Spirituality & Religion in Healing</h1>
+                <div class="slide-number">16 / 21</div>
+            </div>
+            <div class="slide-content">
+                <div class="content-main">
+                    <div class="content-block">
+                        <div class="section-label">Inseparable from Healing</div>
+                        <h3>Spirituality as Central to Care</h3>
+                        <p>Spirituality is inseparable from diabetes healing in Native American culture. Many practice both traditional Native spirituality and Christianity—syncretism is common, and both traditions provide spiritual support for diabetes management (Jernigan et al., 2020).</p>
+                    </div>
+
+                    <div class="content-block">
+                        <div class="section-label">Spiritual Practices</div>
+                        <h3>Ceremonies & Sacred Items</h3>
+                        <div class="data-list">
+                            <div class="data-item">
+                                <p>Bedside rituals, prayer circles, healing songs, drumming for diabetic patients</p>
+                            </div>
+                            <div class="data-item">
+                                <p>Sun Dance and Night Chant offer spiritual strength for chronic illness</p>
+                            </div>
+                            <div class="data-item">
+                                <p>Medicine bags, eagle feathers, sacred herbs never removed without permission</p>
+                            </div>
+                            <div class="data-item">
+                                <p>Many view diabetes as spiritual test sent by Creator (Jernigan et al., 2020)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="insight-box">
+                        <strong>Integration Note:</strong> Spiritual ceremonies and connection to land/ancestors provide mental health support essential for diabetes management (Jernigan et al., 2020). Spirituality is central to holistic healing.
+                    </div>
+
+                    <div class="content-block">
+                        <div class="section-label">Historical Trauma</div>
+                        <h3>Boarding Schools & Mistrust</h3>
+                        <p>Historical trauma from boarding schools and forced assimilation created profound mistrust of healthcare systems (Gone & Trimble, 2012; Walls & Whitbeck, 2012). Nurses must acknowledge this trauma explicitly and address through transparent, respectful care.</p>
+                    </div>
+                </div>
+
+                <div class="content-visual">
+                    <img src="images/slide09-spiritual-practices.jpg" alt="Spiritual practices in healing" class="visual-image">
+                    <p class="visual-caption">Figure 7 — Spiritual practices in healing</p>
+
+                    <div class="content-block">
+                        <div class="section-label">Nursing Protocols</div>
+                        <h3>Respect & Accommodation</h3>
+                        <div class="data-list">
+                            <div class="data-item">
+                                <p>Respect sacred items at all times—never remove without permission</p>
+                            </div>
+                            <div class="data-item">
+                                <p>Accommodate spiritual practices when possible with hospital permissions</p>
+                            </div>
+                            <div class="data-item">
+                                <p>Recognize that spiritual healing aids physical diabetes outcomes</p>
+                            </div>
+                            <div class="data-item">
+                                <p>Focus on positive healing rather than direct death talk (culturally taboo)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 17: ZOOM - MELANIE -->
+        <div class="slide zoom-slide" data-video="zoommelanierodriguez">
+            <video muted loop playsinline>
+                <source src="individual_videos/zoommelanierodriguez.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <!-- SLIDE 18: DIET & NUTRITION -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Diet, Nutrition & Food Access</h1>
+                <div class="slide-number">18 / 21</div>
+            </div>
+            <div class="slide-content">
+                <div class="content-main">
+                    <div class="content-block">
+                        <div class="section-label">Traditional vs. Modern Diet</div>
+                        <h3>From Ancestral Foods to Commodity Rations</h3>
+                        <p>Traditional Native diets were diabetes-protective: lean proteins from wild game/fish, the Three Sisters (corn, beans, squash), berries, nuts, seasonal vegetables. These unprocessed foods provided balanced nutrition and natural blood sugar regulation (Wedekind et al., 2021).</p>
+                    </div>
+
+                    <div class="content-block">
+                        <div class="section-label">Commodity Foods Impact</div>
+                        <h3>Frybread & the Diabetes Epidemic</h3>
+                        <p>Forced relocation created dependency on government commodity foods high in refined flour, sugar, and lard. Frybread, now considered traditional, originated from these rations and fuels the diabetes epidemic (Wedekind et al., 2021).</p>
+                    </div>
+
+                    <div class="content-block">
+                        <div class="section-label">Food Desert Reality</div>
+                        <div class="data-list">
+                            <div class="data-item">
+                                <div class="data-label">76.7%</div>
+                                <div class="data-desc">on reservations live >1 mile from grocery vs 41.2% general U.S. (USDA, 2021; Wedekind et al., 2021)</div>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-label">Nearly 50%</div>
+                                <div class="data-desc">have income ≤200% poverty level vs 28.9% general U.S. (Wedekind et al., 2021)</div>
+                            </div>
+                            <div class="data-item">
+                                <p>High rates of lactose intolerance affect dairy nutrition recommendations</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-visual">
+                    <img src="images/slide10-my-native-plate.jpeg" alt="My Native Plate - Culturally adapted diabetes nutrition" class="visual-image">
+                    <p class="visual-caption">Figure 8 — My Native Plate: Culturally adapted diabetes nutrition (SDPI, 2022)</p>
+
+                    <div class="stat-banner">
+                        <div class="stat-value">76.7%</div>
+                        <div class="stat-label">On reservations live in food deserts (>1 mile from grocery)</div>
+                    </div>
+
+                    <div class="content-block">
+                        <div class="section-label">Nursing Strategies</div>
+                        <h3>Culturally Responsive Nutrition Care</h3>
+                        <div class="data-list">
+                            <div class="data-item">
+                                <p>Frame dietary changes as returning to ancestral foods (SDPI, 2022)</p>
+                            </div>
+                            <div class="data-item">
+                                <p>Involve entire family in meal planning for diabetes</p>
+                            </div>
+                            <div class="data-item">
+                                <p>Suggest healthier preparation methods (baking vs frying)</p>
+                            </div>
+                            <div class="data-item">
+                                <p>Acknowledge food access challenges honestly (USDA, 2021)</p>
+                            </div>
+                            <div class="data-item">
+                                <p>Connect patients with SDPI and nutrition assistance (SDPI, 2022)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="insight-box">
+                        <strong>Key Insight:</strong> Returning to traditional foods is a powerful diabetes intervention that honors heritage while improving control (SDPI, 2022).
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 19: ZOOM - SHANIQUE -->
+        <div class="slide zoom-slide" data-video="zoomshaniquewilson">
+            <video muted loop playsinline>
+                <source src="individual_videos/zoomshaniquewilson.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <!-- SLIDE 20: COMMUNICATION -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">Communication & Special Considerations</h1>
+                <div class="slide-number">20 / 21</div>
+            </div>
+            <div class="slide-content">
+                <div class="content-main">
+                    <div class="content-block">
+                        <div class="section-label">Cultural Communication Styles</div>
+                        <h3>Understanding Differences</h3>
+                        <div class="data-list">
+                            <div class="data-item">
+                                <div class="data-label">Limited Eye Contact</div>
+                                <div class="data-desc">Shows respect, not disengagement (Jernigan et al., 2020)</div>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-label">Silence</div>
+                                <div class="data-desc">Indicates thoughtful processing, not lack of understanding (Jernigan et al., 2020)</div>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-label">"Yes" Means</div>
+                                <div class="data-desc">"I hear you" rather than agreement—verify understanding</div>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-label">Storytelling</div>
+                                <div class="data-desc">Preferred method—use diabetes success stories from community</div>
+                            </div>
+                            <div class="data-item">
+                                <div class="data-label">Humor</div>
+                                <div class="data-desc">Important coping mechanism, should be welcomed</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-block">
+                        <div class="section-label">Building Trust</div>
+                        <h3>Overcoming Historical Trauma</h3>
+                        <p>Boarding schools and unethical medical experiments created profound mistrust of healthcare systems (Gone & Trimble, 2012; Walls & Whitbeck, 2012). Nurses must acknowledge this trauma explicitly and build trust through transparency.</p>
+                    </div>
+
+                    <div class="insight-box">
+                        <strong>Cultural Concept:</strong> Indian Time reflects flexible, present-focused time orientation (Jernigan et al., 2020). Be adaptable with scheduling rather than labeling patients as noncompliant.
+                    </div>
+                </div>
+
+                <div class="content-visual">
+                    <img src="images/slide11-communication.jpg" alt="Culturally responsive communication" class="visual-image">
+                    <p class="visual-caption">Figure 9 — Culturally responsive communication</p>
+
+                    <div class="content-block">
+                        <div class="section-label">Access Barriers</div>
+                        <h3>Geographic & Financial Challenges</h3>
+                        <div class="data-list">
+                            <div class="data-item">
+                                <p>Limited transportation to diabetes appointments (Wedekind et al., 2021)</p>
+                            </div>
+                            <div class="data-item">
+                                <p>Long distances to IHS clinics (IHS, 2024)</p>
+                            </div>
+                            <div class="data-item">
+                                <p>Financial constraints for insulin and testing supplies</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-block">
+                        <div class="section-label">Solutions</div>
+                        <h3>Practical Interventions</h3>
+                        <div class="data-list">
+                            <div class="data-item">
+                                <p>Telehealth for glucose monitoring and diabetes education</p>
+                            </div>
+                            <div class="data-item">
+                                <p>Coordinate with local IHS facilities for continuity (IHS, 2024)</p>
+                            </div>
+                            <div class="data-item">
+                                <p>Involve Community Health Representatives as cultural liaisons</p>
+                            </div>
+                            <div class="data-item">
+                                <p>Connect with SDPI resources (SDPI, 2022)</p>
+                            </div>
+                            <div class="data-item">
+                                <p>Support talking circles for peer diabetes support (Jernigan et al., 2020)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 21: REFERENCES -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1 class="slide-title">References</h1>
+                <div class="slide-number">21 / 21</div>
+            </div>
+            <div class="slide-content" style="padding: 24px 16px;">
+                <div style="font-family: 'Inter', sans-serif; font-size: 11px; line-height: 1.6; color: var(--text-dark);">
+
+                    <p style="margin-bottom: 10px; text-indent: -20px; padding-left: 20px;">Adobe. (n.d.). Indian family having fun during Holi festival – Outdoor mother, son and daughter laughing in front of camera, summer-party and vacation concept (soft focus on mom face) [Stock photo]. Adobe Stock. Retrieved November 9, 2025, from https://stock.adobe.com/1536728443</p>
+
+                    <p style="margin-bottom: 10px; text-indent: -20px; padding-left: 20px;">Adobe. (n.d.). [Stock image 946607364] [Stock photo]. Adobe Stock. Retrieved November 9, 2025, from https://stock.adobe.com/946607364</p>
+
+                    <p style="margin-bottom: 10px; text-indent: -20px; padding-left: 20px;">bird_saranyoo. (n.d.). A Native American elder resting in a hospital bed, surrounded by caring family members offering love and support [Stock photo]. Adobe Stock. Retrieved November 9, 2025, from https://stock.adobe.com/1017338135</p>
+
+                    <p style="margin-bottom: 10px; text-indent: -20px; padding-left: 20px;">Centers for Disease Control and Prevention. (2024, May 15). Appendix A: Detailed tables. https://www.cdc.gov/diabetes/php/data-research/appendix.html#cdc_report_pub_study_section_3-table-3</p>
+
+                    <p style="margin-bottom: 10px; text-indent: -20px; padding-left: 20px;">David. (n.d.). A bundle of sage and an eagle feather are laid out in preparation of a Native American, Indian, or Indigenous smudging ceremony. Pemberton BC, Canada [Photograph]. Adobe Stock. https://stock.adobe.com/508544344</p>
+
+                    <p style="margin-bottom: 10px; text-indent: -20px; padding-left: 20px;">Erikson, E. H. (1982). <em>The life cycle completed: A review</em>. W. W. Norton & Company.</p>
+
+                    <p style="margin-bottom: 10px; text-indent: -20px; padding-left: 20px;">Gone, J. P., & Trimble, J. E. (2012). American Indian and Alaska Native mental health: Diverse perspectives on enduring disparities. <em>Annual Review of Clinical Psychology, 8</em>, 131–160. https://doi.org/10.1146/annurev-clinpsy-032511-143127</p>
+
+                    <p style="margin-bottom: 10px; text-indent: -20px; padding-left: 20px;">Indian Health Service. (2023). <em>Disparities</em>. U.S. Department of Health and Human Services. https://www.ihs.gov/newsroom/factsheets/disparities/</p>
+
+                    <p style="margin-bottom: 10px; text-indent: -20px; padding-left: 20px;">Indian Health Service. (2024). <em>2024 IHS diabetes care and outcomes audit results</em>. U.S. Department of Health and Human Services. https://www.ihs.gov/diabetes/data/</p>
+
+                    <p style="margin-bottom: 10px; text-indent: -20px; padding-left: 20px;">Jernigan, V. B., D'Amico, E. J., Duran, B., & Buchwald, D. (2020). Multilevel and community-level interventions with Native Americans: Challenges and opportunities. <em>Prevention Science, 21</em>(Suppl 1), 65–73. https://doi.org/10.1007/s11121-018-0916-3</p>
+
+                    <p style="margin-bottom: 10px; text-indent: -20px; padding-left: 20px;">Moslow, M. (n.d.). Chic Medicine Wheel [Digital illustration]. Original artwork.</p>
+
+                    <p style="margin-bottom: 10px; text-indent: -20px; padding-left: 20px;">National Institute of Diabetes and Digestive and Kidney Diseases. (2023). <em>Diabetes in American Indians and Alaska Natives</em>. National Institutes of Health. https://www.niddk.nih.gov/health-information/community-health-outreach/american-indian-alaska-native</p>
+
+                    <p style="margin-bottom: 10px; text-indent: -20px; padding-left: 20px;">Office of Minority Health. (2023). <em>Diabetes and American Indians/Alaska Natives</em>. U.S. Department of Health and Human Services. https://minorityhealth.hhs.gov/diabetes-and-american-indiansalaska-natives</p>
+
+                    <p style="margin-bottom: 10px; text-indent: -20px; padding-left: 20px;">Special Diabetes Program for Indians. (2022). <em>My Native Plate program materials</em>. Indian Health Service. https://www.ihs.gov/diabetes/sdpi/</p>
+
+                    <p style="margin-bottom: 10px; text-indent: -20px; padding-left: 20px;">Stock 4 You. (n.d.). Portrait motivated executive confident senior business man specialist looking dreaming at copy space. Inspired Indian or Latin Hispanic mature middle-age boss, leader, CEO male businessman in office [Stock photo]. Adobe Stock. Retrieved November 9, 2025, from https://stock.adobe.com/1505937914</p>
+
+                    <p style="margin-bottom: 10px; text-indent: -20px; padding-left: 20px;">U.S. Department of Agriculture. (2021). <em>Food access research atlas</em>. Economic Research Service. https://www.ers.usda.gov/data-products/food-access-research-atlas/</p>
+
+                    <p style="margin-bottom: 10px; text-indent: -20px; padding-left: 20px;">Walls, M. L., & Whitbeck, L. B. (2012). The intergenerational effects of relocation policies on indigenous families. <em>Journal of Family Issues, 33</em>(9), 1272–1293. https://doi.org/10.1177/0192513X12447178</p>
+
+                    <p style="margin-bottom: 10px; text-indent: -20px; padding-left: 20px;">Wedekind, L. E., Mitchell, C. M., Andersen, C. C., Knowler, W. C., & Hanson, R. L. (2021). Epidemiology of type 2 diabetes in Indigenous communities in the United States. <em>Current Diabetes Reports, 21</em>(11), 47. https://doi.org/10.1007/s11892-021-01406-3</p>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+            </div>
+        </div>
+
+        <!-- Mobile Controls -->
+        <div class="mobile-controls" id="mobileControls">
+            <div class="slide-counter" id="slideCounter">Slide 1 / 21</div>
+
+            <div class="nav-row">
+                <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">Previous</button>
+                <button class="nav-btn small" id="pauseResumeBtn" onclick="toggleAudioPlayback()">
+                    <span id="pauseResumeLabel">Pause</span>
+                </button>
+                <button class="nav-btn small" onclick="restartCurrentSlide()">Restart</button>
+                <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next</button>
+            </div>
+
+            <div class="palette-row">
+                <span class="palette-label">Theme</span>
+                <select class="palette-select" id="paletteSelector" onchange="changePalette(this.value)">
+                    <option value="turquoise-copper">Turquoise & Copper</option>
+                    <option value="earth-heritage">Earth & Heritage</option>
+                    <option value="sage-sand">Sage & Sand</option>
+                    <option value="medicine-wheel">Medicine Wheel</option>
+                    <option value="river-stone">River Stone</option>
+                    <option value="cedar-pine">Cedar & Pine</option>
+                    <option value="sunset-mesa">Sunset Mesa</option>
+                    <option value="professional-medical">Professional Medical</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const presentationContainer = document.querySelector('.presentation-container');
+    let currentPalette = 'turquoise-copper';
+
+    // Audio segments mapped by slide index (0-based)
+    const slideAudioMap = {
+        0: ['audio/Block-1-Title.wav'],                      // Title
+        1: ['individual_videos/zoomintroaudio.wav'],         // Zoom Intro
+        2: ['individual_videos/zoomteamaudio.wav'],          // Team
+        3: ['individual_videos/zoomanaluciadioaudio.wav'],   // Zoom Ana
+        4: [],                                               // Health Disparities (continues)
+        5: ['audio/Block-5.wav'],                            // Root Causes
+        6: ['individual_videos/zoombrookethomasaudio.wav'],  // Zoom Brooke
+        7: [],                                               // Traditional Healing (continues)
+        8: ['individual_videos/zoomchanelcampbellaudio.wav'], // Zoom Chanel
+        9: [],                                               // Medicine Wheel (continues)
+        10: ['individual_videos/zoomcharlenefanaaudio.wav'], // Zoom Charlene
+        11: [],                                              // Family Dynamics (continues)
+        12: ['individual_videos/zoommathewmoslowaudio.wav'], // Zoom Mathew
+        13: [],                                              // Gender Issues (continues)
+        14: ['individual_videos/zoommatteotestaaudio.wa.wav'],  // Zoom Matteo
+        15: [],                                              // Spirituality (continues)
+        16: ['individual_videos/zoommelanieroriguezaudio.wav'], // Zoom Melanie
+        17: [],                                              // Diet & Nutrition (continues)
+        18: ['individual_videos/zoomshaniquewilsonaudio.wav'], // Zoom Shanique
+        19: [],                                              // Communication (continues)
+        20: []                                               // References
+    };
+
+    let audioUnlocked = false;
+    let currentAudio = null;
+    let audioQueue = [];
+    let autoAdvanceTimer = null;
+    let isAutoAdvancing = false;
+
+    // Zoom slides (indices where auto-advance after 15 seconds should occur)
+    const zoomSlideIndices = [1, 3, 6, 8, 10, 12, 14, 16, 18];
+
+    function updateProgress() {
+        const progress = ((currentSlide + 1) / totalSlides) * 100;
+        document.getElementById('progressBar').style.width = progress + '%';
+    }
+
+    function updateSlideCounter() {
+        document.getElementById('slideCounter').textContent = `Slide ${currentSlide + 1} / ${totalSlides}`;
+    }
+
+    function updateNavigationButtons() {
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        prevBtn.disabled = currentSlide === 0;
+        nextBtn.disabled = currentSlide === totalSlides - 1;
+    }
+
+    function startPresentation() {
+        if (audioUnlocked) return;
+        audioUnlocked = true;
+
+        // Hide start button
+        const startButton = document.getElementById('startButton');
+        if (startButton) startButton.classList.add('hidden');
+
+        // Show navigation controls
+        const mobileControls = document.getElementById('mobileControls');
+        if (mobileControls) mobileControls.classList.remove('hidden');
+
+        // Play video if present
+        const titleVideo = document.getElementById('titleVideo');
+        const titlePlaceholder = document.getElementById('titlePlaceholder');
+        if (titleVideo && titlePlaceholder) {
+            titlePlaceholder.style.display = 'none';
+            titleVideo.style.display = 'block';
+            titleVideo.play().catch(err => console.log('Video autoplay prevented:', err));
+        }
+
+        // Start audio for title slide
+        playSlideAudio(currentSlide);
+    }
+
+    function stopAudio() {
+        if (currentAudio) {
+            currentAudio.onended = null;
+            currentAudio.pause();
+            currentAudio.currentTime = 0;
+            currentAudio = null;
+        }
+        audioQueue = [];
+    }
+
+    function clearAutoAdvanceTimer() {
+        if (autoAdvanceTimer) {
+            clearTimeout(autoAdvanceTimer);
+            autoAdvanceTimer = null;
+        }
+    }
+
+    function playNextAudio() {
+        if (audioQueue.length === 0) {
+            currentAudio = null;
+            // Auto-advance when audio completes on content slides and Zoom Intro
+            const shouldAutoAdvance = !zoomSlideIndices.includes(currentSlide) || currentSlide === 1;
+            if (shouldAutoAdvance && currentSlide < totalSlides - 1) {
+                isAutoAdvancing = true;
+                autoAdvanceTimer = setTimeout(() => {
+                    changeSlide(1);
+                }, 1000); // 1 second pause after audio ends
+            }
+            return;
+        }
+        const nextAudioSrc = audioQueue.shift();
+        currentAudio = new Audio(nextAudioSrc);
+        currentAudio.onended = playNextAudio;
+        const playPromise = currentAudio.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(err => console.log('Audio autoplay prevented:', err));
+        }
+    }
+
+    function playSlideAudio(index) {
+        if (!audioUnlocked) return;
+
+        const audioFiles = slideAudioMap[index] || [];
+        if (audioFiles.length > 0) {
+            stopAudio();
+            audioQueue = [...audioFiles];
+            playNextAudio();
+        }
+    }
+
+    function toggleAudioPlayback() {
+        if (!currentAudio) return;
+        if (currentAudio.paused) {
+            currentAudio.play();
+            document.getElementById('pauseResumeLabel').textContent = 'Pause';
+        } else {
+            currentAudio.pause();
+            document.getElementById('pauseResumeLabel').textContent = 'Resume';
+        }
+    }
+
+    function restartCurrentSlide() {
+        playSlideAudio(currentSlide);
+    }
+
+    // Video playback control
+    function playSlideVideo(slide) {
+        const video = slide.querySelector('video');
+        if (video) {
+            video.currentTime = 0;
+            video.play().catch(err => console.log('Video playback prevented:', err));
+        }
+    }
+
+    function stopSlideVideo(slide) {
+        const video = slide.querySelector('video');
+        if (video) {
+            video.pause();
+            video.currentTime = 0;
+        }
+    }
+
+    function changeSlide(direction) {
+        const newSlide = currentSlide + direction;
+        if (newSlide < 0 || newSlide >= totalSlides) return;
+
+        // Clear any existing auto-advance timer
+        clearAutoAdvanceTimer();
+
+        const previousSlide = slides[currentSlide];
+        const nextSlide = slides[newSlide];
+
+        // Check if transitioning from zoom slide to content slide
+        const isZoomToContent = previousSlide.classList.contains('zoom-slide') &&
+                                 !nextSlide.classList.contains('zoom-slide') &&
+                                 direction > 0;
+
+        if (isZoomToContent) {
+            // Apply zoom-into-white transition
+            previousSlide.classList.add('zoom-in-transition');
+
+            setTimeout(() => {
+                previousSlide.classList.remove('active', 'zoom-in-transition');
+                stopSlideVideo(previousSlide); // Stop video after transition
+                currentSlide = newSlide;
+                nextSlide.classList.add('active', 'fade-from-white');
+
+                updateProgress();
+                updateSlideCounter();
+                updateNavigationButtons();
+                playSlideAudio(currentSlide);
+                playSlideVideo(nextSlide); // Start video if next slide has one
+
+                setTimeout(() => {
+                    nextSlide.classList.remove('fade-from-white');
+                }, 600);
+            }, 1500);
+        } else {
+            // Standard instant transition
+            stopSlideVideo(previousSlide); // Stop previous video
+            previousSlide.classList.remove('active');
+            currentSlide = newSlide;
+            nextSlide.classList.add('active');
+
+            updateProgress();
+            updateSlideCounter();
+            updateNavigationButtons();
+            playSlideAudio(currentSlide);
+            playSlideVideo(nextSlide); // Start video if next slide has one
+        }
+
+        // Auto-advance for team member zoom slides (15 seconds)
+        if (zoomSlideIndices.includes(newSlide) && newSlide !== 1) {
+            isAutoAdvancing = true;
+            autoAdvanceTimer = setTimeout(() => {
+                changeSlide(1);
+            }, 15000);
+        }
+
+        // Scroll slide content to top
+        const slideContent = nextSlide.querySelector('.slide-content');
+        if (slideContent) {
+            slideContent.scrollTop = 0;
+        }
+    }
+
+    function changePalette(palette) {
+        currentPalette = palette;
+        presentationContainer.setAttribute('data-palette', palette);
+    }
+
+    // Keyboard navigation
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') {
+            e.preventDefault();
+            changeSlide(1);
+        } else if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            changeSlide(-1);
+        }
+    });
+
+    // Touch swipe support
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    document.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    document.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        const diff = touchStartX - touchEndX;
+
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0) {
+                // Swipe left - next slide
+                changeSlide(1);
+            } else {
+                // Swipe right - previous slide
+                changeSlide(-1);
+            }
+        }
+    }
+
+    // Initialize
+    updateProgress();
+    updateSlideCounter();
+    updateNavigationButtons();
+
+    // Hide mobile controls initially (show after start button is pressed)
+    document.getElementById('mobileControls').classList.add('hidden');
+</script>
+
+</body>
+</html>

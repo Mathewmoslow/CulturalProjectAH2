@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentation Color Palette Selector - Native American Nursing Care</title>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+            animation: fadeInDown 1s ease-out;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        
+        .palette-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .palette-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            animation: fadeInUp 0.5s ease-out;
+            animation-fill-mode: both;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .palette-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .palette-card:nth-child(1) { animation-delay: 0.1s; }
+        .palette-card:nth-child(2) { animation-delay: 0.2s; }
+        .palette-card:nth-child(3) { animation-delay: 0.3s; }
+        .palette-card:nth-child(4) { animation-delay: 0.4s; }
+        .palette-card:nth-child(5) { animation-delay: 0.5s; }
+        .palette-card:nth-child(6) { animation-delay: 0.6s; }
+        .palette-card:nth-child(7) { animation-delay: 0.7s; }
+        .palette-card:nth-child(8) { animation-delay: 0.8s; }
+        
+        .palette-header {
+            padding: 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .palette-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            margin-bottom: 5px;
+        }
+        
+        .palette-description {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.4;
+        }
+        
+        .color-blocks {
+            display: flex;
+            height: 120px;
+        }
+        
+        .color-block {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .color-block:hover {
+            flex: 1.5;
+            z-index: 10;
+        }
+        
+        .color-code {
+            font-size: 0.9em;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .color-block:hover .color-code {
+            opacity: 1;
+        }
+        
+        .palette-info {
+            padding: 20px;
+            background: white;
+        }
+        
+        .color-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .color-detail {
+            text-align: center;
+        }
+        
+        .color-sample {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin: 0 auto 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .color-detail:hover .color-sample {
+            transform: scale(1.2) rotate(10deg);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .color-label {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 2px;
+        }
+        
+        .color-hex {
+            font-size: 0.9em;
+            font-weight: 600;
+            color: #333;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .preview-section {
+            padding: 20px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .mini-slide {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .mini-slide h4 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 10px;
+        }
+        
+        .mini-content {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .mini-card {
+            flex: 1;
+            padding: 8px;
+            border-radius: 5px;
+            font-size: 0.75em;
+            border-left: 3px solid;
+        }
+        
+        .select-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+        
+        .select-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .selected-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            display: none;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .palette-card.selected .selected-indicator {
+            display: block;
+        }
+        
+        .code-output {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 40px;
+            display: none;
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .code-output.active {
+            display: block;
+        }
+        
+        .code-header {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+        
+        .copy-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            float: right;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+        
+        .rating-section {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        
+        .star {
+            color: #ddd;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .star:hover,
+        .star.active {
+            color: #FFD700;
+            transform: scale(1.2);
+        }
+        
+        @media (max-width: 768px) {
+            .palette-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .color-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Color Palette Selection Board</h1>
+            <p>Choose the perfect theme for your Native American Cultural Nursing Care presentation</p>
+        </div>
+        
+        <div class="palette-grid">
+            <!-- Palette 1: Earth & Heritage (Original) -->
+            <div class="palette-card" data-palette="1">
+                <div class="selected-indicator">Selected ✓</div>
+                <div class="palette-header">
+                    <h3 class="palette-title">Earth & Heritage</h3>
+                    <p class="palette-description">Traditional earth tones representing the connection to land and cultural roots</p>
+                </div>
+                <div class="color-blocks">
+                    <div class="color-block" style="background: #8B4513;">
+                        <span class="color-code">#8B4513</span>
+                    </div>
+                    <div class="color-block" style="background: #CD853F;">
+                        <span class="color-code">#CD853F</span>
+                    </div>
+                    <div class="color-block" style="background: #DAA520;">
+                        <span class="color-code">#DAA520</span>
+                    </div>
+                </div>
+                <div class="palette-info">
+                    <div class="color-details">
+                        <div class="color-detail">
+                            <div class="color-sample" style="background: #8B4513;"></div>
+                            <div class="color-label">Primary</div>
+                            <div class="color-hex">#8B4513</div>
+                        </div>
+                        <div class="color-detail">
+                            <div class="color-sample" style="background: #CD853F;"></div>
+                            <div class="color-label">Secondary</div>
+                            <div class="color-hex">#CD853F</div>
+                        </div>
+                        <div class="color-detail">
+                            <div class="color-sample" style="background: #DAA520;"></div>
+                            <div class="color-label">Accent</div>
+                            <div class="color-hex">#DAA520</div>
+                        </div>
+                    </div>
+                    <div class="preview-section">
+                        <div class="mini-slide">
+                            <h4 style="color: #8B4513;">Sample Slide Preview</h4>
+                            <div class="mini-content">
+                                <div class="mini-card" style="background: rgba(139, 69, 19, 0.1); border-color: #CD853F;">
+                                    Warm, traditional feel
+                                </div>
+                                <div class="mini-card" style="background: rgba(205, 133, 63, 0.1); border-color: #DAA520;">
+                                    Cultural authenticity
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rating-section">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <button class="select-btn" onclick="selectPalette(1)">Select This Palette</button>
+                </div>
+            </div>
+            
+            <!-- Palette 2: Turquoise & Copper -->
+            <div class="palette-card" data-palette="2">
+                <div class="selected-indicator">Selected ✓</div>
+                <div class="palette-header">
+                    <h3 class="palette-title">Turquoise & Copper</h3>
+                    <p class="palette-description">Inspired by Southwestern jewelry and sacred stones</p>
+                </div>
+                <div class="color-blocks">
+                    <div class="color-block" style="background: #40798C;">
+                        <span class="color-code">#40798C</span>
+                    </div>
+                    <div class="color-block" style="background: #70A9A1;">
+                        <span class="color-code">#70A9A1</span>
+                    </div>
+                    <div class="color-block" style="background: #B08D57;">
+                        <span class="color-code">#B08D57</span>
+                    </div>
+                </div>
+                <div class="palette-info">
+                    <div class="color-details">
+                        <div class="color-detail">
+                            <div class="color-sample" style="background: #40798C;"></div>
+                            <div class="color-label">Primary</div>
+                            <div class="color-hex">#40798C</div>
+                        </div>
+                        <div class="color-detail">
+                            <div class="color-sample" style="background: #70A9A1;"></div>
+                            <div class="color-label">Secondary</div>
+                            <div class="color-hex">#70A9A1</div>
+                        </div>
+                        <div class="color-detail">
+                            <div class="color-sample" style="background: #B08D57;"></div>
+                            <div class="color-label">Accent</div>
+                            <div class="color-hex">#B08D57</div>
+                        </div>
+                    </div>
+                    <div class="preview-section">
+                        <div class="mini-slide">
+                            <h4 style="color: #40798C;">Sample Slide Preview</h4>
+                            <div class="mini-content">
+                                <div class="mini-card" style="background: rgba(64, 121, 140, 0.1); border-color: #70A9A1;">
+                                    Sacred turquoise
+                                </div>
+                                <div class="mini-card" style="background: rgba(112, 169, 161, 0.1); border-color: #B08D57;">
+                                    Copper warmth
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rating-section">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <button class="select-btn" onclick="selectPalette(2)">Select This Palette</button>
+                </div>
+            </div>
+            
+            <!-- Palette 3: Sage & Sand -->
+            <div class="palette-card" data-palette="3">
+                <div class="selected-indicator">Selected ✓</div>
+                <div class="palette-header">
+                    <h3 class="palette-title">Sage & Sand</h3>
+                    <p class="palette-description">Desert-inspired neutrals with sacred sage green</p>
+                </div>
+                <div class="color-blocks">
+                    <div class="color-block" style="background: #7A8B61;">
+                        <span class="color-code">#7A8B61</span>
+                    </div>
+                    <div class="color-block" style="background: #A8C09A;">
+                        <span class="color-code">#A8C09A</span>
+                    </div>
+                    <div class="color-block" style="background: #D4A373;">
+                        <span class="color-code">#D4A373</span>
+                    </div>
+                </div>
+                <div class="palette-info">
+                    <div class="color-details">
+                        <div class="color-detail">
+                            <div class="color-sample" style="background: #7A8B61;"></div>
+                            <div class="color-label">Primary</div>
+                            <div class="color-hex">#7A8B61</div>
+                        </div>
+                        <div class="color-detail">
+                            <div class="color-sample" style="background: #A8C09A;"></div>
+                            <div class="color-label">Secondary</div>
+                            <div class="color-hex">#A8C09A</div>
+                        </div>
+                        <div class="color-detail">
+                            <div class="color-sample" style="background: #D4A373;"></div>
+                            <div class="color-label">Accent</div>
+                            <div class="color-hex">#D4A373</div>
+                        </div>
+                    </div>
+                    <div class="preview-section">
+                        <div class="mini-slide">
+                            <h4 style="color: #7A8B61;">Sample Slide Preview</h4>
+                            <div class="mini-content">
+                                <div class="mini-card" style="background: rgba(122, 139, 97, 0.1); border-color: #A8C09A;">
+                                    Healing sage
+                                </div>
+                                <div class="mini-card" style="background: rgba(168, 192, 154, 0.1); border-color: #D4A373;">
+                                    Desert warmth
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rating-section">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <button class="select-btn" onclick="selectPalette(3)">Select This Palette</button>
+                </div>
+            </div>
+            
+            <!-- Palette 4: Medicine Wheel -->
+            <div class="palette-card" data-palette="4">
+                <div class="selected-indicator">Selected ✓</div>
+                <div class="palette-header">
+                    <h3 class="palette-title">Medicine Wheel</h3>
+                    <p class="palette-description">Four directions colors representing holistic balance</p>
+                </div>
+                <div class="color-blocks">
+                    <div class="color-block" style="background: #C73E1D;">
+                        <span class="color-code">#C73E1D</span>
+                    </div>
+                    <div class="color-block" style="background: #F4B942;">
+                        <span class="color-code">#F4B942</span>
+                    </div>
+                    <div class="color-block" style="background: #2E7D32;">
+                        <span class="color-code">#2E7D32</span>
+                    </div>
+                </div>
+                <div class="palette-info">
+                    <div class="color-details">
+                        <div class="color-detail">
+                            <div class="color-sample" style="background: #C73E1D;"></div>
+                            <div class="color-label">Primary</div>
+                            <div class="color-hex">#C73E1D</div>
+                        </div>
+                        <div class="color-detail">
+                            <div class="color-sample" style="background: #F4B942;"></div>
+                            <div class="color-label">Secondary</div>
+                            <div class="color-hex">#F4B942</div>
+                        </div>
+                        <div class="color-detail">
+                            <div class="color-sample" style="background: #2E7D32;"></div>
+                            <div class="color-label">Accent</div>
+                            <div class="color-hex">#2E7D32</div>
+                        </div>
+                    </div>
+                    <div class="preview-section">
+                        <div class="mini-slide">
+                            <h4 style="color: #C73E1D;">Sample Slide Preview</h4>
+                            <div class="mini-content">
+                                <div class="mini-card" style="background: rgba(199, 62, 29, 0.1); border-color: #F4B942;">
+                                    Sacred red
+                                </div>
+                                <div class="mini-card" style="background: rgba(244, 185, 66, 0.1); border-color: #2E7D32;">
+                                    Four directions
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rating-section">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <button class="select-btn" onclick="selectPalette(4)">Select This Palette</button>
+                </div>
+            </div>
+            
+            <!-- Palette 5: River Stone -->
+            <div class="palette-card" data-palette="5">
+                <div class="selected-indicator">Selected ✓</div>
+                <div class="palette-header">
+                    <h3 class="palette-title">River Stone</h3>
+                    <p class="palette-description">Cool, calming tones inspired by river rocks and water</p>
+                </div>
+                <div class="color-blocks">
+                    <div class="color-block" style="background: #5C6672;">
+                        <span class="color-code">#5C6672</span>
+                    </div>
+                    <div class="color-block" style="background: #8B95A1;">
+                        <span class="color-code">#8B95A1</span>
+                    </div>
+                    <div class="color-block" style="background: #6B9BD1;">
+                        <span class="color-code">#6B9BD1</span>
+                    </div>
+                </div>
+                <div class="palette-info">
+                    <div class="color-details">
+                        <div class="color-detail">
+                            <div class="color-sample" style="background: #5C6672;"></div>
+                            <div class="color-label">Primary</div>
+                            <div class="color-hex">#5C6672</div>
+                        </div>
+                        <div class="color-detail">
+                            <div class="color-sample" style="background: #8B95A1;"></div>
+                            <div class="color-label">Secondary</div>
+                            <div class="color-hex">#8B95A1</div>
+                        </div>
+                        <div class="color-detail">
+                            <div class="color-sample" style="background: #6B9BD1;"></div>
+                            <div class="color-label">Accent</div>
+                            <div class="color-hex">#6B9BD1</div>
+                        </div>
+                    </div>
+                    <div class="preview-section">
+                        <div class="mini-slide">
+                            <h4 style="color: #5C6672;">Sample Slide Preview</h4>
+                            <div class="mini-content">
+                                <div class="mini-card" style="background: rgba(92, 102, 114, 0.1); border-color: #8B95A1;">
+                                    Professional tone
+                                </div>
+                                <div class="mini-card" style="background: rgba(139, 149, 161, 0.1); border-color: #6B9BD1;">
+                                    Water element
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rating-section">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <button class="select-btn" onclick="selectPalette(5)">Select This Palette</button>
+                </div>
+            </div>
+            
+            <!-- Palette 6: Cedar & Pine -->
+            <div class="palette-card" data-palette="6">
+                <div class="selected-indicator">Selected ✓</div>
+                <div class="palette-header">
+                    <h3 class="palette-title">Cedar & Pine</h3>
+                    <p class="palette-description">Forest-inspired greens and browns for natural healing</p>
+                </div>
+                <div class="color-blocks">
+                    <div class="color-block" style="background: #3E5641;">
+                        <span class="color-code">#3E5641</span>
+                    </div>
+                    <div class="color-block" style="background: #6A7B5F;">
+                        <span class="color-code">#6A7B5F</span>
+                    </div>
+                    <div class="color-block" style="background: #A67C52;">
+                        <span class="color-code">#A67C52</span>
+                    </div>
+                </div>
+                <div class="palette-info">
+                    <div class="color-details">
+                        <div class="color-detail">
+                            <div class="color-sample" style="background: #3E5641;"></div>
+                            <div class="color-label">Primary</div>
+                            <div class="color-hex">#3E5641</div>
+                        </div>
+                        <div class="color-detail">
+                            <div class="color-sample" style="background: #6A7B5F;"></div>
+                            <div class="color-label">Secondary</div>
+                            <div class="color-hex">#6A7B5F</div>
+                        </div>
+                        <div class="color-detail">
+                            <div class="color-sample" style="background: #A67C52;"></div>
+                            <div class="color-label">Accent</div>
+                            <div class="color-hex">#A67C52</div>
+                        </div>
+                    </div>
+                    <div class="preview-section">
+                        <div class="mini-slide">
+                            <h4 style="color: #3E5641;">Sample Slide Preview</h4>
+                            <div class="mini-content">
+                                <div class="mini-card" style="background: rgba(62, 86, 65, 0.1); border-color: #6A7B5F;">
+                                    Cedar strength
+                                </div>
+                                <div class="mini-card" style="background: rgba(106, 123, 95, 0.1); border-color: #A67C52;">
+                                    Pine wisdom
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rating-section">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <button class="select-btn" onclick="selectPalette(6)">Select This Palette</button>
+                </div>
+            </div>
+            
+            <!-- Palette 7: Sunset Mesa -->
+            <div class="palette-card" data-palette="7">
+                <div class="selected-indicator">Selected ✓</div>
+                <div class="palette-header">
+                    <h3 class="palette-title">Sunset Mesa</h3>
+                    <p class="palette-description">Warm sunset colors over desert mesas</p>
+                </div>
+                <div class="color-blocks">
+                    <div class="color-block" style="background: #D2691E;">
+                        <span class="color-code">#D2691E</span>
+                    </div>
+                    <div class="color-block" style="background: #E3735E;">
+                        <span class="color-code">#E3735E</span>
+                    </div>
+                    <div class="color-block" style="background: #F4A460;">
+                        <span class="color-code">#F4A460</span>
+                    </div>
+                </div>
+                <div class="palette-info">
+                    <div class="color-details">
+                        <div class="color-detail">
+                            <div class="color-sample" style="background: #D2691E;"></div>
+                            <div class="color-label">Primary</div>
+                            <div class="color-hex">#D2691E</div>
+                        </div>
+                        <div class="color-detail">
+                            <div class="color-sample" style="background: #E3735E;"></div>
+                            <div class="color-label">Secondary</div>
+                            <div class="color-hex">#E3735E</div>
+                        </div>
+                        <div class="color-detail">
+                            <div class="color-sample" style="background: #F4A460;"></div>
+                            <div class="color-label">Accent</div>
+                            <div class="color-hex">#F4A460</div>
+                        </div>
+                    </div>
+                    <div class="preview-section">
+                        <div class="mini-slide">
+                            <h4 style="color: #D2691E;">Sample Slide Preview</h4>
+                            <div class="mini-content">
+                                <div class="mini-card" style="background: rgba(210, 105, 30, 0.1); border-color: #E3735E;">
+                                    Sunset warmth
+                                </div>
+                                <div class="mini-card" style="background: rgba(227, 115, 94, 0.1); border-color: #F4A460;">
+                                    Mesa glow
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rating-section">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <button class="select-btn" onclick="selectPalette(7)">Select This Palette</button>
+                </div>
+            </div>
+            
+            <!-- Palette 8: Professional Medical -->
+            <div class="palette-card" data-palette="8">
+                <div class="selected-indicator">Selected ✓</div>
+                <div class="palette-header">
+                    <h3 class="palette-title">Professional Medical</h3>
+                    <p class="palette-description">Clean, clinical colors with cultural sensitivity</p>
+                </div>
+                <div class="color-blocks">
+                    <div class="color-block" style="background: #1E4D6B;">
+                        <span class="color-code">#1E4D6B</span>
+                    </div>
+                    <div class="color-block" style="background: #4A90A4;">
+                        <span class="color-code">#4A90A4</span>
+                    </div>
+                    <div class="color-block" style="background: #67B26F;">
+                        <span class="color-code">#67B26F</span>
+                    </div>
+                </div>
+                <div class="palette-info">
+                    <div class="color-details">
+                        <div class="color-detail">
+                            <div class="color-sample" style="background: #1E4D6B;"></div>
+                            <div class="color-label">Primary</div>
+                            <div class="color-hex">#1E4D6B</div>
+                        </div>
+                        <div class="color-detail">
+                            <div class="color-sample" style="background: #4A90A4;"></div>
+                            <div class="color-label">Secondary</div>
+                            <div class="color-hex">#4A90A4</div>
+                        </div>
+                        <div class="color-detail">
+                            <div class="color-sample" style="background: #67B26F;"></div>
+                            <div class="color-label">Accent</div>
+                            <div class="color-hex">#67B26F</div>
+                        </div>
+                    </div>
+                    <div class="preview-section">
+                        <div class="mini-slide">
+                            <h4 style="color: #1E4D6B;">Sample Slide Preview</h4>
+                            <div class="mini-content">
+                                <div class="mini-card" style="background: rgba(30, 77, 107, 0.1); border-color: #4A90A4;">
+                                    Clinical trust
+                                </div>
+                                <div class="mini-card" style="background: rgba(74, 144, 164, 0.1); border-color: #67B26F;">
+                                    Healing green
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rating-section">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <button class="select-btn" onclick="selectPalette(8)">Select This Palette</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="code-output" id="codeOutput">
+            <div class="code-header">CSS Variables for Selected Palette</div>
+            <div class="code-block">
+                <pre id="codeContent"></pre>
+                <button class="copy-btn" onclick="copyCode()">Copy CSS</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const palettes = {
+            1: {
+                name: 'Earth & Heritage',
+                primary: '#8B4513',
+                secondary: '#CD853F',
+                accent: '#DAA520'
+            },
+            2: {
+                name: 'Turquoise & Copper',
+                primary: '#40798C',
+                secondary: '#70A9A1',
+                accent: '#B08D57'
+            },
+            3: {
+                name: 'Sage & Sand',
+                primary: '#7A8B61',
+                secondary: '#A8C09A',
+                accent: '#D4A373'
+            },
+            4: {
+                name: 'Medicine Wheel',
+                primary: '#C73E1D',
+                secondary: '#F4B942',
+                accent: '#2E7D32'
+            },
+            5: {
+                name: 'River Stone',
+                primary: '#5C6672',
+                secondary: '#8B95A1',
+                accent: '#6B9BD1'
+            },
+            6: {
+                name: 'Cedar & Pine',
+                primary: '#3E5641',
+                secondary: '#6A7B5F',
+                accent: '#A67C52'
+            },
+            7: {
+                name: 'Sunset Mesa',
+                primary: '#D2691E',
+                secondary: '#E3735E',
+                accent: '#F4A460'
+            },
+            8: {
+                name: 'Professional Medical',
+                primary: '#1E4D6B',
+                secondary: '#4A90A4',
+                accent: '#67B26F'
+            }
+        };
+        
+        let selectedPalette = null;
+        
+        function selectPalette(paletteNum) {
+            // Remove previous selection
+            document.querySelectorAll('.palette-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Add selection to current
+            const selectedCard = document.querySelector(`[data-palette="${paletteNum}"]`);
+            selectedCard.classList.add('selected');
+            
+            // Store selection
+            selectedPalette = palettes[paletteNum];
+            
+            // Show code output
+            const codeOutput = document.getElementById('codeOutput');
+            codeOutput.classList.add('active');
+            
+            // Generate CSS
+            const cssCode = `/* ${selectedPalette.name} Color Palette */
+:root {
+    --primary-color: ${selectedPalette.primary};
+    --secondary-color: ${selectedPalette.secondary};
+    --accent-color: ${selectedPalette.accent};
+    --text-dark: #2C1810;
+    --text-light: #5C4033;
+    --bg-light: #FFF8F3;
+}
+
+/* Apply to your presentation by replacing the existing color variables */
+/* Primary: Used for main headings and important elements */
+/* Secondary: Used for subheadings and borders */
+/* Accent: Used for highlights and interactive elements */`;
+            
+            document.getElementById('codeContent').textContent = cssCode;
+            
+            // Smooth scroll to code
+            codeOutput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Show confirmation
+            showNotification(`Selected: ${selectedPalette.name}`);
+        }
+        
+        function copyCode() {
+            const codeContent = document.getElementById('codeContent').textContent;
+            navigator.clipboard.writeText(codeContent).then(() => {
+                showNotification('CSS copied to clipboard!');
+            });
+        }
+        
+        function showNotification(message) {
+            // Create notification
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 10px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                z-index: 10000;
+                animation: slideInRight 0.3s ease-out;
+                font-weight: 600;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'fadeOutUp 0.3s ease-out';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+        
+        // Rating system
+        document.querySelectorAll('.star').forEach(star => {
+            star.addEventListener('click', function() {
+                const stars = this.parentElement.querySelectorAll('.star');
+                const index = Array.from(stars).indexOf(this);
+                
+                stars.forEach((s, i) => {
+                    if (i <= index) {
+                        s.classList.add('active');
+                    } else {
+                        s.classList.remove('active');
+                    }
+                });
+            });
+        });
+        
+        // Add animation styles
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInRight {
+                from {
+                    opacity: 0;
+                    transform: translateX(50px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+            
+            @keyframes fadeOutUp {
+                from {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+                to {
+                    opacity: 0;
+                    transform: translateY(-20px);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Hover effects for palette cards
+        document.querySelectorAll('.palette-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.zIndex = '10';
+            });
+            card.addEventListener('mouseleave', function() {
+                this.style.zIndex = '1';
+            });
+        });
+    </script>
+</body>
+</html>

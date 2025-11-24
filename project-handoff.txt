@@ -1,0 +1,24 @@
+Project: Cultural Influences on Nursing Care – Zoom-style Presentation
+Location: /Users/mathewmoslow/Documents/AHU/NURS320 - AH2/Cultural Project/
+
+Goal:
+• Simulate a polished presentation for Cultural Influences on Nursing Care covering Type 2 diabetes among middle-aged Native American men.
+• Provide both a standard deck experience (editorial-presentation-2026.html) and a Zoom-inspired rehearsal mode (zoom-conference-presentation.html) with speaker overlays, synchronized audio, and audience/presenter windows that scale to multiple screen sizes/projectors.
+
+What’s Done:
+1. Core Deck (editorial-presentation-2026.html)
+   • Full slide content with layout, palette switcher (eight palettes) and presenter notes, keyboard navigation, presenter/audience sync.
+   • JS-driven slide scaling (1.8× presenter, 3× audience) fills each viewport; control layer floats over the stage with palette select and notes.
+   • Audio map (/audio/Block-*.mp3) queues per slide, plus presenter-mode audience video autoplay and palette broadcast.
+
+2. Zoom-style Flow (zoom-conference-presentation.html)
+   • New HTML renders Zoom-like overlay before each slide. Uses /images/*.png stills (and shared-screen placeholder) for every speaker.
+   • Overlay durations configurable per speaker (9–13s) and audio runs underneath; slide appears only after overlay fades out.
+   • Controls remain usable (Prev/Next, palette, notes) even while overlays are showing; audience view hides controls.
+   • JS handles speaker-intro map, audio queue, and scale transform for consistent layout; palette sync mirrors presenter/audience logic.
+
+Next Steps for Claude Code:
+• Expand speaker/audio map to cover remaining slides using the Word plan’s timing guidance and `/audio` files.
+• Replace PNG overlays with recorded video clips when available, leveraging the existing transition timing.
+• Test audience fullscreen scaling on external displays and tweak scale caps if needed.
+• Add any additional playback controls (pause/resume during overlay, scrub, etc.) required for rehearsal or grading.

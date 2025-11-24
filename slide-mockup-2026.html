@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editorial Slide Mockup - 2026 Design</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f8f8f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        /* RESPONSIVE CONTAINER - SCALES PROPORTIONALLY */
+        .slide-wrapper {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* STRICT SLIDE CONTAINER - NO OVERFLOW */
+        .slide {
+            width: 1400px;
+            height: 787px; /* 16:9 aspect ratio */
+            background: white;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            overflow: hidden; /* STRICT - nothing escapes */
+            position: relative;
+            display: grid;
+            grid-template-rows: auto 1fr;
+            transform-origin: center center;
+        }
+
+        /* SCALE SLIDE TO FIT VIEWPORT */
+        @media (max-width: 1450px) {
+            .slide {
+                transform: scale(0.95);
+            }
+        }
+
+        @media (max-width: 1350px) {
+            .slide {
+                transform: scale(0.85);
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .slide {
+                transform: scale(0.75);
+            }
+        }
+
+        @media (max-width: 1100px) {
+            .slide {
+                transform: scale(0.65);
+            }
+        }
+
+        @media (max-width: 950px) {
+            .slide {
+                transform: scale(0.55);
+            }
+        }
+
+        @media (max-width: 800px) {
+            .slide {
+                transform: scale(0.45);
+            }
+        }
+
+        @media (max-width: 650px) {
+            .slide {
+                transform: scale(0.35);
+            }
+        }
+
+        /* HEADER AREA - FIXED HEIGHT */
+        .slide-header {
+            background: linear-gradient(135deg, #40798C 0%, #2a5c6b 100%);
+            padding: 35px 50px 30px;
+            border-bottom: 3px solid #B08D57;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .slide-number {
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+            font-size: 14px;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .slide-title {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 42px;
+            font-weight: 700;
+            color: white;
+            line-height: 1.1;
+            letter-spacing: -0.5px;
+            max-width: 800px;
+        }
+
+        /* CONTENT AREA - SCROLLABLE IF NEEDED BUT DESIGNED NOT TO */
+        .slide-content {
+            padding: 40px 50px;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 40px;
+            overflow: hidden; /* STRICT */
+        }
+
+        /* LEFT COLUMN - TEXT CONTENT */
+        .content-main {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overflow: hidden; /* STRICT */
+        }
+
+        .section-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #B08D57;
+            margin-bottom: 8px;
+        }
+
+        .content-block {
+            background: #fafafa;
+            padding: 20px 24px;
+            border-left: 3px solid #40798C;
+        }
+
+        .content-block h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+            letter-spacing: -0.3px;
+        }
+
+        .content-block p {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 1.6;
+            color: #4a4a4a;
+        }
+
+        /* RIGHT COLUMN - DATA VISUALIZATION */
+        .content-visual {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overflow: hidden; /* STRICT */
+        }
+
+        /* STAT CARD - EDITORIAL STYLE */
+        .stat-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: #40798C;
+            box-shadow: 0 4px 12px rgba(64, 121, 140, 0.1);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #40798C, #70A9A1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .stat-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: white;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .stat-content {
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .stat-number {
+            font-family: 'Inter', sans-serif;
+            font-size: 32px;
+            font-weight: 900;
+            color: #1a1a1a;
+            line-height: 1;
+            letter-spacing: -1px;
+        }
+
+        .stat-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            color: #666;
+            margin-top: 4px;
+            line-height: 1.3;
+        }
+
+        /* IMAGE PLACEHOLDER - STRICT ASPECT RATIO */
+        .image-container {
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            background: linear-gradient(135deg, rgba(64, 121, 140, 0.08), rgba(176, 141, 87, 0.08));
+            border: 2px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-container svg {
+            width: 64px;
+            height: 64px;
+            stroke: #40798C;
+            fill: none;
+            stroke-width: 1.5;
+            opacity: 0.3;
+        }
+
+        .image-caption {
+            font-family: 'Inter', sans-serif;
+            font-size: 10px;
+            font-weight: 500;
+            color: #888;
+            margin-top: 8px;
+            line-height: 1.4;
+        }
+
+        .image-caption strong {
+            color: #40798C;
+            font-weight: 600;
+        }
+
+        /* KEY INSIGHT BOX */
+        .insight-box {
+            background: #40798C;
+            color: white;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .insight-box::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            font-family: 'Libre Baskerville', serif;
+            font-size: 120px;
+            color: rgba(255, 255, 255, 0.1);
+            line-height: 1;
+        }
+
+        .insight-box p {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* LIST STYLING */
+        .data-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .data-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            color: #4a4a4a;
+            line-height: 1.5;
+        }
+
+        .data-item::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background: #B08D57;
+            border-radius: 50%;
+            margin-top: 7px;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <!-- HEADER -->
+        <div class="slide-header">
+            <h1 class="slide-title">Health Disparities & Disease Burden</h1>
+            <div class="slide-number">03 / 12</div>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="slide-content">
+            <!-- LEFT COLUMN -->
+            <div class="content-main">
+                <div class="content-block">
+                    <div class="section-label">Epidemiology</div>
+                    <h3>Diabetes Prevalence Among AI/AN Adults</h3>
+                    <p>American Indians and Alaska Natives face a staggering diabetes burden. The prevalence of diagnosed diabetes among AI/AN adults is 13.6%, compared to just 7% among Caucasians—making them 1.5 times more likely to have diabetes.</p>
+                </div>
+
+                <div class="content-block">
+                    <div class="section-label">Complications</div>
+                    <h3>Disproportionate Impact</h3>
+                    <div class="data-list">
+                        <div class="data-item">2.3× more likely to die from diabetes-related complications</div>
+                        <div class="data-item">Nearly double the amputation rate compared to general population</div>
+                        <div class="data-item">Significantly higher kidney failure rates requiring dialysis</div>
+                        <div class="data-item">Elevated rates of diabetic retinopathy and vision loss</div>
+                    </div>
+                </div>
+
+                <div class="insight-box">
+                    <p>Rural Native American men are particularly affected, with an 18.9% prevalence rate compared to 13.7% in urban areas. These statistics represent real people, real families, and an urgent need for culturally competent diabetes care.</p>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN -->
+            <div class="content-visual">
+                <!-- IMAGE PLACEHOLDER -->
+                <div>
+                    <div class="image-container">
+                        <!-- Line drawing icon for image -->
+                        <svg viewBox="0 0 24 24">
+                            <rect x="3" y="3" width="18" height="18" rx="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <path d="M21 15l-5-5L5 21"/>
+                        </svg>
+                    </div>
+                    <p class="image-caption"><strong>Figure 1:</strong> Diabetes prevalence comparison infographic. Source: IHS & CDC diabetes statistics, 2019-2024</p>
+                </div>
+
+                <!-- STATISTICS -->
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number">13.6%</div>
+                        <div class="stat-label">Diabetes prevalence in AI/AN adults vs 7% Caucasian</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number">2.3×</div>
+                        <div class="stat-label">More likely to die from diabetes complications</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number">18.9%</div>
+                        <div class="stat-label">Rural prevalence vs 13.7% urban areas</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

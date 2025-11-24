@@ -1,0 +1,338 @@
+COMPREHENSIVE PLAN FOR DIABETES-FOCUSED PRESENTATION ADAPTATION
+PROJECT ANALYSIS SUMMARY
+Current State:
+
+Professional HTML presentation with 12 slides
+Presenter/audience dual-view system with speaker notes
+Color palette selector tool available
+General Native American health disparities focus
+
+New Focus:
+
+Diabetes-specific in middle-aged Native American men (ages 40-65)
+Erikson's Generativity vs. Stagnation stage
+Research from two comprehensive PDFs analyzed
+
+
+DETAILED ADAPTATION PLAN
+PHASE 1: TEAM MEMBER ROLE ASSIGNMENT (Based on diabetes research)
+New Role Assignments:
+
+AnaLucia Diao - Health Disparities & Diabetes Epidemiology in AI/AN Midlife Men
+Brooke Thomas - Traditional Healing & CAM Practices for Diabetes
+Chanel Campbell - Health Beliefs & Holistic Diabetes Perspectives
+Charlene Fana - Family Roles & Decision-Making in Diabetes Care
+Mathew Moslow - Gender Considerations in Diabetes Management
+Matteo Testa - Religion & Spirituality Influences on Diabetes Care
+Melanie Rodriguez - Diet, Nutrition & Traditional Foods vs. Diabetes
+Shanique Wilson - Special Considerations & Culturally Competent Care Strategies
+
+
+PHASE 2: SLIDE-BY-SLIDE CONTENT ADAPTATION
+SLIDE 1: Title Slide
+
+Changes: Update subtitle to emphasize diabetes focus
+Keep: Professional design, team introduction structure
+Add: Diabetes-specific imagery (glucose meter, insulin, healthy traditional foods)
+Image: Native American nurse with diabetes patient OR traditional foods display
+
+SLIDE 2: Team Introductions
+
+Changes: Update each member's role to reflect diabetes-specific assignments
+Keep: Professional card layout
+Add: Brief diabetes statistics teaser
+Images: Team member photos (requested full head-to-toe professional attire)
+
+SLIDE 3: Background & Significance
+
+Major Changes:
+
+Focus on Erikson's Generativity vs. Stagnation stage (ages 40-65)
+Emphasize how diabetes threatens generative roles
+Add specific diabetes burden statistics
+
+
+Add:
+
+Chart showing AI/AN diabetes rates (13.6% vs 7% general population)
+Image of middle-aged Native American man in family/community setting
+Generativity concept illustration
+
+
+
+SLIDE 4: Health Disparities - Diabetes Focus
+
+Major Changes:
+
+Diabetes-specific statistics: 2.3x mortality rate, amputation rates
+Life expectancy gap (73 vs 78.5 years)
+Kidney disease, complications data
+
+
+Keep: Visual chart structure
+Add:
+
+Infographic showing diabetes complications
+Map of high-prevalence areas (Navajo Nation, Pima)
+Graph: Life expectancy comparison
+Images: Diabetic foot care, kidney dialysis awareness
+
+
+
+SLIDE 5: Traditional Healing & CAM for Diabetes
+
+Major Changes:
+
+Specific herbs for diabetes (bitter melon tea, sage, traditional roots)
+Sweat lodge ceremonies for diabetes management
+"Walking in two worlds" approach
+
+
+Add:
+
+Images: Sage smudging, sweat lodge, herbal remedies, medicine man
+Photo: Traditional herbs used for blood sugar control
+Four Sacred Medicines imagery
+
+
+Keep: Respectful tone toward traditional practices
+
+SLIDE 6: Health Beliefs - Diabetes as Imbalance
+
+Major Changes:
+
+Diabetes as "sugar sickness" / "white man's disease"
+Fatalistic views ("inexorable downward course")
+Medicine Wheel and harmony concepts
+Holistic view: physical, spiritual, emotional, mental balance
+
+
+Add:
+
+Medicine Wheel diagram with diabetes context
+Images: Balance/harmony symbols, traditional healing circle
+Quote cards from research about Native beliefs
+
+
+
+SLIDE 7: Family Decision-Making in Diabetes Care
+
+Major Changes:
+
+Family involvement in insulin decisions
+Matriarchal influence (grandmother's approval)
+Multi-generational household dynamics
+Collective vs. individual decision-making
+
+
+Add:
+
+Images: Extended family gathering, elder consultation
+Diagram: Family decision-making flow
+Photo: Family meal planning together
+
+
+
+SLIDE 8: Gender Considerations - Male Perspectives
+
+Major Changes:
+
+Male stoicism and under-reporting symptoms
+"Toughing it out" culture
+Higher diabetes prevalence in Native men
+Historical trauma impact on men's health
+Leveraging generative role motivation
+
+
+Add:
+
+Images: Native American man at clinic, health screening
+Statistics: Male vs. female diabetes rates
+Photo: Men's diabetes support group
+
+
+
+SLIDE 9: Religion & Spirituality in Diabetes Care
+
+Major Changes:
+
+Diabetes as spiritual disharmony
+Ceremonies for healing (cornmeal blessings, drumming)
+Christianity + Indigenous practices blend
+"Hozho" concept (Navajo balance)
+
+
+Add:
+
+Images: Prayer ceremony, traditional spiritual items
+Medicine pouch photo
+Drumming/chanting ceremony images
+Christian church + traditional elements
+
+
+
+SLIDE 10: Diet & Nutrition - Key Diabetes Factor
+
+Major Changes:
+
+Traditional diet vs. commodity foods history
+Frybread dilemma ("pride and pain")
+Food deserts on reservations
+"First Foods" movement (corn, beans, squash, wild rice)
+"My Native Plate" concept
+
+
+Add:
+
+IMAGE: Frybread (prominent!)
+IMAGE: Traditional foods (corn, beans, squash, game meat, wild rice)
+IMAGE: Food desert/convenience store
+IMAGE: Community garden on reservation
+IMAGE: "My Native Plate" diagram
+Before/After: Western vs Traditional diet comparison
+
+
+
+SLIDE 11: Special Considerations for Culturally Competent Care
+
+Major Changes:
+
+Communication: Eye contact, silence, time orientation
+Trust-building after historical trauma
+Practical tips: Tying medication to daily events, not clock time
+Community resources (tribal diabetes programs, IHS)
+Accommodating ceremonies and traditional practices
+
+
+Add:
+
+Images: Nurse-patient respectful interaction
+Community health representative
+Tribal wellness center
+Telehealth setup in rural area
+Zumba class on reservation
+
+
+
+SLIDE 12: Conclusion - Culturally Competent Diabetes Care Strategies
+
+Major Changes:
+
+5 key strategies with diabetes focus
+Build trust, educate in cultural context
+Collaborate with healers and family
+Advocate for access (Special Diabetes Program for Indians)
+Reflect on practice
+"Hozho" - restoring harmony
+Thank you in multiple languages (Ahéhee', Miigwech, Yakoke)
+
+
+Add:
+
+Inspirational closing image
+Success story visual
+Resources infographic
+
+
+
+SLIDE 13: References (NEW - APA 7th Edition)
+
+Comprehensive diabetes-specific references from both PDFs
+All within last 5 years
+Properly formatted
+
+
+PHASE 3: IMAGE REQUIREMENTS
+Critical Images Needed (captioned):
+
+Glucose monitoring/testing (medical context)
+Traditional foods array (corn, beans, squash, game, wild rice)
+Frybread (cultural icon)
+Sage smudging/sacred herbs
+Sweat lodge exterior
+Medicine Wheel diagram
+Extended family gathering
+Native elder portrait
+Middle-aged Native American man (health context)
+Community garden/traditional farming
+Food desert/convenience store
+Nurse-patient interaction (respectful)
+Tribal wellness center
+Men's health support group
+Traditional healing ceremony
+"My Native Plate" nutrition guide
+Life expectancy charts/infographics
+Diabetes complications awareness images
+Community Zumba/exercise class
+Telehealth setup
+
+
+PHASE 4: TECHNICAL ENHANCEMENTS
+Color Palette Integration:
+
+Create real-time color toggle system
+Options: Earth tones (current), Turquoise/Coral (Southwestern), Forest Green/Red (traditional), Modern Medical (blues/whites)
+CSS variable-based system for instant switching
+
+Speaker Notes:
+
+Comprehensive voiceover scripts for each slide
+2-3 minutes per slide speaking time
+Professional tone, evidence-based, culturally respectful
+
+Interactive Features:
+
+Maintain presenter/audience dual view
+Enhance speaker notes with diabetes-specific talking points
+Add slide-specific timing indicators
+
+
+PHASE 5: RUBRIC COMPLIANCE CHECKLIST
+✅ Introduction Part 1 (5 points): Names + roles clearly stated
+✅ Introduction Part 2 (10 points): Meeting 2 introduction criteria
+✅ Content (45 points): All 8 content criteria addressed:
+
+Health Disparities/Conditions (Diabetes)
+Common CAM Practices
+Health Beliefs
+Decision-Making/Family Hierarchy
+Specific Gender Issues
+Religion/Spirituality Influences
+Diet/Nutrition Effects
+Special Considerations
+
+✅ Presentation (10 points): Clear, organized, engaging with visuals
+✅ Participation (10 points): Each member has specific role
+✅ References (10 points): APA 7th, within 5 years, relevant
+
+PHASE 6: DELIVERABLES
+
+Updated HTML Presentation - Single file with all diabetes content
+Enhanced Color Palette Selector - With real-time toggle capability
+Voiceover Scripts Document - Clean scripts for recording
+Image Integration - All 20+ captioned images embedded
+Speaker Notes - Comprehensive for each slide
+Presenter Mode Guide - Updated instructions
+
+
+IMPLEMENTATION APPROACH
+Step 1: Create backup of original files
+Step 2: Develop new slide content with diabetes focus
+Step 3: Source and integrate all images with captions
+Step 4: Write comprehensive speaker notes/voiceover scripts
+Step 5: Enhance color palette system with real-time toggle
+Step 6: Test presenter mode functionality
+Step 7: Create complete references slide (APA 7th)
+Step 8: Quality assurance check against rubric
+Step 9: Export final deliverable to /outputs directory
+
+
+KEY SUCCESS FACTORS:
+
+Every rubric item explicitly addressed
+Rich visual content with professional captions
+Culturally respectful and evidence-based
+Professional design quality
+Robust technical features
+Award-winning presentation design principles
+

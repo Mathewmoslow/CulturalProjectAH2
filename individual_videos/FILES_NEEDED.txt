@@ -1,0 +1,36 @@
+VIDEO FILES NEEDED FOR PRESENTATION
+=====================================
+
+Place the following files in this directory:
+
+VIDEO FILES (with audio):
+-------------------------
+1. zoomintro.mp4                    - Zoom intro video
+2. zoomanaluciadiao.mp4            - Ana Lucia Diao video
+3. zoombrookethomas.mp4            - Brooke Thomas video
+4. zoomchanelcampbell.mp4          - Chanel Campbell video
+5. zoomcharlenefana.mp4            - Charlene Fana video
+6. zoommathewmoslow.mp4            - Mathew Moslow video
+7. zoommatteotesta.mp4             - Matteo Testa video
+8. zoommelanierodriguez.mp4        - Melanie Rodriguez video
+9. zoomshaniquewilson.mp4          - Shanique Wilson video
+
+AUDIO FILES (audio only):
+-------------------------
+1. zoomintroaudio.mp3              - Zoom intro audio
+2. zoomanaluciadioaudio.mp3        - Ana Lucia Diao audio
+3. zoombrookethomasaudio.mp3       - Brooke Thomas audio
+4. zoomchanelcampbellaudio.mp3     - Chanel Campbell audio
+5. zoomcharlenefanaaudio.mp3       - Charlene Fana audio
+6. zoommathewmoslowaudio.mp3       - Mathew Moslow audio
+7. zoommatteoestaaudio.mp3         - Matteo Testa audio
+8. zoommelanieroriguezaudio.mp3    - Melanie Rodriguez audio
+9. zoomshaniquewilsonaudio.mp3     - Shanique Wilson audio
+
+NOTES:
+------
+- Video files will play MUTED on zoom slides
+- Audio files will play separately and continue through transition to info slides
+- Videos should be MP4 format (H.264 codec recommended)
+- Audio should be MP3 format
+- Drop files into this directory as they become ready
